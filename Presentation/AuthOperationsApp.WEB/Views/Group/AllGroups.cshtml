@@ -1,0 +1,48 @@
+﻿@model GetAllGroupQueryResponse
+
+@{
+    ViewData["Title"] = "Yetki Grupları";
+}
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped mt-4 table-responsive">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Yetki Grupları</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model.GroupListInfoDto.GroupListDto)
+                    {
+                        <tr>
+                            <td>@group.Name</td>
+                            <td>
+                                <a asp-action="AllRolesByGroupId" asp-controller="RoleGroup" asp-route-groupId="@group.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Grubun Yetkilerini Göster</a>
+                            </td>
+                            <td>
+                                <a asp-action="AllUsersByGroupId" asp-controller="UserGroup" asp-route-groupId="@group.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Bağlı Kullanıcıları Göster</a>
+                            </td>
+                            <td>
+                                @* <a asp-action="UpdateRole" asp-controller="Role" asp-route-roleId="@role.Id" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i>  Düzenle</a> *@
+                                <a data-toggle="modal" data-target="#updateRoleModal" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i> Düzenle</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

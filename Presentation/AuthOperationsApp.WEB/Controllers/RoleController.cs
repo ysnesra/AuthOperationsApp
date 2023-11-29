@@ -30,7 +30,7 @@ namespace AuthOperationsApp.WEB.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommandRequest request)
         {
-            var response = await Mediator.Send(request);
+            UpdateRoleCommandResponse response = await Mediator.Send(request);
             if (!response.UpdateRoleInfoDto.Success)
             {
                 return View(response.UpdateRoleInfoDto.Message);

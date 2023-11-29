@@ -1,6 +1,4 @@
-﻿
-
-using MediatR;
+﻿using MediatR;
 
 namespace AuthOperationsApp.Application.Features.Queries.Role.GetAllRole
 {

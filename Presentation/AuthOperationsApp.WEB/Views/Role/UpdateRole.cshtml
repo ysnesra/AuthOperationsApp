@@ -1,0 +1,65 @@
+﻿@model UpdateRoleCommandResponse
+
+@{
+    ViewData["Title"] = "Yetki Güncelleme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal fade" id="updateRoleModal" tabindex="-1" role="dialog" aria-labelledby="updateRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateRoleModalLabel">Yetki Güncelleme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateRoleForm" data-val="true" method="post">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+                    <label asp-for="UpdateRoleInfoDto.UpdateRoleDto.Name"></label>
+                    <input asp-for="UpdateRoleInfoDto.UpdateRoleDto.Name" class="form-control" />
+                    <span asp-validation-for="UpdateRoleInfoDto.UpdateRoleDto.Name" class="text-danger small"></span>
+                    <br />
+
+                    <button type="submit" class="btn btn-dark">Güncelle</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    
+    <script>
+        $(document).ready(function () {
+            $("#updateRoleForm").submit(function (e) {
+                e.preventDefault();
+
+                // Burada form submit işlemlerini ve modal'ı kapatma işlemlerini gerçekleştirin.
+
+                $("#updateRoleModal").modal("hide");
+            });
+        });
+    </script>
+}
+
+
+
+@* <form asp-action="UpdateRole" asp-controller="Role" data-val="true" method="post">
+
+    <input type="hidden" value="Id" value="@Model.UpdateRoleInfoDto.UpdateRoleDto.Id" />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+    <label for="Name">Rol</label>
+    <input asp-for="UpdateRoleInfoDto.UpdateRoleDto.Name" value="@Model.UpdateRoleInfoDto.UpdateRoleDto.Name" class="form-control" />
+    <span asp-validation-for="UpdateRoleInfoDto.UpdateRoleDto.Name" class="text-danger small"></span>
+    <br />
+
+    <button type="submit" asp-route-userId="@Model.UpdateRoleInfoDto.UpdateRoleDto.Id" class="btn btn-dark">Güncelle</button>
+
+</form>  *@
