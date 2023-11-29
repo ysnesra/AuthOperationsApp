@@ -22,7 +22,6 @@ namespace AuthOperationsApp.Persistence
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Repository
-
             services.AddScoped<IUserReadRepository, UserReadRepository>();
             services.AddScoped<IUserWriteRepository, UserWriteRepository>();
 
@@ -39,9 +38,6 @@ namespace AuthOperationsApp.Persistence
             services.AddScoped<IUserGroupWriteRepository, UserGroupWriteRepository>();
 
             // Service
-
-            //services.AddScoped<IResult, Result>();
-            //services.AddScoped<IDataResult, DataResult>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IGroupService, GroupService>();

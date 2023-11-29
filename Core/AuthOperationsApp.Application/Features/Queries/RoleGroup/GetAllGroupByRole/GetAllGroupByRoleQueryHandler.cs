@@ -1,5 +1,6 @@
 ﻿
 using AuthOperationsApp.Application.Abstractions.Services;
+using AuthOperationsApp.Application.Constants;
 using AuthOperationsApp.Application.DTOs.RoleGroup;
 using AutoMapper;
 using MediatR;
@@ -29,13 +30,13 @@ namespace AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupBy
             if (groups is null)
             {
                 groupByRoleInfoDto.Success = false;
-                groupByRoleInfoDto.Message = "Lessons belongig student not found.";
+                groupByRoleInfoDto.Message = Messages.GroupsBelongingRoleNotFound;
                 groupByRoleInfoDto.GroupByRoleDto= [];
                 return new GetAllGroupByRoleQueryResponse(groupByRoleInfoDto);
 
             }
             groupByRoleInfoDto.Success = true;
-            groupByRoleInfoDto.Message = "Lessons belongig student listed succesfully.";
+            groupByRoleInfoDto.Message = Messages.GroupsBelongingRoleSuccess;
             groupByRoleInfoDto.GroupByRoleDto = groups;
             return new GetAllGroupByRoleQueryResponse(groupByRoleInfoDto);
         }

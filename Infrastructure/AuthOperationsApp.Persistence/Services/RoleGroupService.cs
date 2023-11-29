@@ -1,4 +1,5 @@
 ﻿using AuthOperationsApp.Application.Abstractions.Services;
+using AuthOperationsApp.Application.Constants;
 using AuthOperationsApp.Application.DTOs.RoleGroup;
 using AuthOperationsApp.Application.Repositories;
 using AuthOperationsApp.Domain.Entities;
@@ -41,9 +42,7 @@ namespace AuthOperationsApp.Persistence.Services
 
             var groupsInRoleIds = groupsInRole.Select(rg => rg.GroupId).ToList();
 
-            var groupsNotInRole = await _groupReadRepository
-                .GetWhere(group => !groupsInRoleIds.Contains(group.Id))
-                .ToListAsync();
+            var groupsNotInRole = await _groupReadRepository.GetWhere(group => !groupsInRoleIds.Contains(group.Id)).ToListAsync();
 
             var groupsDto = _mapper.Map<List<AllGroupNoRoleDto>>(groupsNotInRole);
             return groupsDto;
@@ -60,7 +59,7 @@ namespace AuthOperationsApp.Persistence.Services
                 return new AssignGroupToRoleInfoDto
                 {
                     Success = false,
-                    Message = $"Group with ID {groupId} does not exist in the system."
+                    Message = Messages.GroupIdNotExist,
                 };
             }
 
@@ -70,7 +69,7 @@ namespace AuthOperationsApp.Persistence.Services
                 return new AssignGroupToRoleInfoDto
                 {
                     Success = false,
-                    Message = $"Role has already been assigned to Group with ID {groupId}."
+                    Message = Messages.RoleExistInGroup,
                 };
             }
 
@@ -88,7 +87,7 @@ namespace AuthOperationsApp.Persistence.Services
             return new AssignGroupToRoleInfoDto
             {
                 Success = true,
-                Message = "Group assigned to role successfully.",
+                Message = Messages.AssignGroupSuccess,
                 AssignGroupToRoleDto = mappedRoleGroup
             };
         }
@@ -103,7 +102,7 @@ namespace AuthOperationsApp.Persistence.Services
                 return new UnassignGroupToRoleInfoDto
                 {
                     Success = false,
-                    Message = $"Role doesn't exist in Group with ID {groupId}."
+                    Message = Messages.RoleNotExistInGroup,
                 };
             }
    
@@ -114,7 +113,7 @@ namespace AuthOperationsApp.Persistence.Services
             return new UnassignGroupToRoleInfoDto
             {
                 Success = true,
-                Message = "Group unassigned to role successfully.",
+                Message = Messages.UnassignGroupSuccess,
                 UnassignGroupToRoleDto = mappedRoleGroup
             };
         }

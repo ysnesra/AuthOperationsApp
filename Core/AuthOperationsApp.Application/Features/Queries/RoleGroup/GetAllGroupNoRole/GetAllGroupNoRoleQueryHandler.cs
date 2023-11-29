@@ -1,4 +1,5 @@
 ﻿using AuthOperationsApp.Application.Abstractions.Services;
+using AuthOperationsApp.Application.Constants;
 using AuthOperationsApp.Application.DTOs.RoleGroup;
 using AutoMapper;
 using MediatR;
@@ -26,13 +27,13 @@ namespace AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupNo
             if (groupsNoRole is null)
             {
                 allGroupNoRoleInfoDto.Success = false;
-                allGroupNoRoleInfoDto.Message = "Groups without assigned roles not found.";
+                allGroupNoRoleInfoDto.Message = Messages.GroupsWithoutAssignRolesNotFound;
                 allGroupNoRoleInfoDto.AllGroupNoRoleDto = [];
                 return new GetAllGroupNoRoleQueryResponse(allGroupNoRoleInfoDto);
 
             }
             allGroupNoRoleInfoDto.Success = true;
-            allGroupNoRoleInfoDto.Message = "Groups without assigned roles listed succesfully.";
+            allGroupNoRoleInfoDto.Message = Messages.GroupsWithoutAssignRolesSuccess;
             allGroupNoRoleInfoDto.AllGroupNoRoleDto = groupsNoRole;
             return new GetAllGroupNoRoleQueryResponse(allGroupNoRoleInfoDto);
         }

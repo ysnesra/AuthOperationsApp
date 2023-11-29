@@ -18,10 +18,8 @@ namespace AuthOperationsApp.Application.Features.Commands.RoleGroup.AssignGroupT
 
         public async Task<AssignGroupToRoleCommandResponse> Handle(AssignGroupToRoleCommandRequest request, CancellationToken cancellationToken)
         {
-            //RoleId ajax ile gelecek
+         
             var response = await _roleGroupService.AssignGroupToRoleAsync(request.GroupId, request.RoleId);
-           
-
             return new AssignGroupToRoleCommandResponse(response);
         }
     }

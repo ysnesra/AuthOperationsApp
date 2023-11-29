@@ -1,4 +1,5 @@
 ﻿using AuthOperationsApp.Application.Abstractions.Services;
+using AuthOperationsApp.Application.Constants;
 using AuthOperationsApp.Application.DTOs.Role;
 using AuthOperationsApp.Application.Features.Commands.Role.UpdateRole;
 using AuthOperationsApp.Application.Repositories;
@@ -46,10 +47,8 @@ namespace AuthOperationsApp.Persistence.Services
                 return new UpdateRoleInfoDto
                 {
                     Success = false,
-                    Message = $"Role doesn't exist."
+                    Message = Messages.RoleNotExist,
                 };
-          
-    
 
             roleDto.Name =request.Name;
   
@@ -62,7 +61,7 @@ namespace AuthOperationsApp.Persistence.Services
                 return new UpdateRoleInfoDto
                 {
                     Success = false,
-                    Message = $"Failed to update role."
+                    Message = Messages.UpdateRoleFailed,
                 };
             }
             var roleMapped = _mapper.Map<UpdateRoleInfoDto>(roleDb);
