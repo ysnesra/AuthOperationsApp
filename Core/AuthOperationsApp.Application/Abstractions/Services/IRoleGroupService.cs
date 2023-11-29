@@ -6,5 +6,7 @@ namespace AuthOperationsApp.Application.Abstractions.Services
     {
         Task<List<GroupByRoleDto?>> GetGroupsByRoleIdAsync(Guid roleId, bool tracking = false);
         Task<List<AllGroupNoRoleDto?>> GetGroupsNoRoleAsync(Guid roleId);
+        Task<AssignGroupToRoleInfoDto> AssignGroupToRoleAsync(Guid groupId, Guid roleId);
+        Task<UnassignGroupToRoleInfoDto> UnassignGroupToRoleAsync(Guid groupId, Guid roleId);
     }
 }

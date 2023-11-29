@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Yetkinin bağlı olduğu gruplar";
+    ViewData["Title"] = "Yetki Listeleme Sayfası";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,9 +14,10 @@
 
 
 <div class="card">
-    <div class="card-body">
+    <div class="card-body">       
         <div class="row">
             <div class="col-md-4">
+                <h5 class="card-title">Yetkinin Bağlı Olduğu Gruplar</h5>
                 <ul id="GroupsByRole">
                     
                 </ul>
@@ -25,6 +26,7 @@
 
             </div>
             <div class="col-md-4">
+                <h5 class="card-title">Yetkinin Olmadığı Gruplar</h5>
                 <ul id="GroupsNoRole">
                  
                 </ul>

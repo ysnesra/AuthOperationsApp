@@ -5,7 +5,7 @@ namespace AuthOperationsApp.Application.Features.Commands.RoleGroup.AssignGroupT
     public class AssignGroupToRoleCommandRequest : IRequest<AssignGroupToRoleCommandResponse>
     {
         public Guid GroupId { get; set; }
-        public Guid? RoleId { get; set; }
+        public Guid RoleId { get; set; }
       
     }
 }

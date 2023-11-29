@@ -1,4 +1,6 @@
-﻿using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupByRole;
+﻿using AuthOperationsApp.Application.Features.Commands.RoleGroup.AssignGroupToRole;
+using AuthOperationsApp.Application.Features.Commands.RoleGroup.UnassignGroupToRole;
+using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupByRole;
 using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupNoRole;
 using AuthOperationsApp.Infrastructure.Base;
 using MediatR;
@@ -60,30 +62,44 @@ namespace AuthOperationsApp.WEB.Controllers
             return Json(new { error = response.AllGroupNoRoleInfoDto.Message });
         }
 
-        //[HttpPost]
-        //public async Task<JsonResult> AssignGroupToRole([FromBody] string[] LessonId)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        SelectLessonByStudentCommandRequest request = new SelectLessonByStudentCommandRequest();
+        //Role Grup atama
+        [HttpPost]
+        public async Task<JsonResult> AssignGroupToRole([FromBody] string GroupId , string RoleId)
+        {
+            if (ModelState.IsValid)
+            {
+                AssignGroupToRoleCommandRequest request = new AssignGroupToRoleCommandRequest();
+                request.GroupId = Guid.Parse(GroupId);
+                request.RoleId = Guid.Parse(RoleId);
 
-        //        List<Guid> less = new List<Guid>();
+                AssignGroupToRoleCommandResponse response = await Mediator.Send(request);
 
-        //        foreach (var item in LessonId)
-        //        {
-        //            less.Add(Guid.Parse(item));
-        //        }
+                if (response.AssignGroupToRoleInfoDto.Success)
+                    return Json(response.AssignGroupToRoleInfoDto.Message);
+                else
+                    return Json(new { error = response.AssignGroupToRoleInfoDto.Message });
+            }
+            return Json(new { error = "Invalid model state" });
+        }
 
-        //        request.LessonIds = less;
+        //Roleden Grup atamasını kaldırma
+        [HttpPost]
+        public async Task<JsonResult> UnassignGroupToRole([FromBody] string GroupId, string RoleId)
+        {
+            if (ModelState.IsValid)
+            {
+                UnassignGroupToRoleCommandRequest request = new UnassignGroupToRoleCommandRequest();
+                request.GroupId = Guid.Parse(GroupId);
+                request.RoleId = Guid.Parse(RoleId);
 
-        //        SelectLessonByStudentCommandResponse response = await Mediator.Send(request);
+                UnassignGroupToRoleCommandResponse response = await Mediator.Send(request);
 
-        //        if (response.StudentLessonResponseDto.Success)
-        //            return Json("Ok");
-        //        else
-        //            return Json(new { error = response.StudentLessonResponseDto.Message });
-        //    }
-        //    return Json(new { error = "Invalid model state" });
-        //}
+                if (response.UnassignGroupToRoleInfoDto.Success)
+                    return Json(response.UnassignGroupToRoleInfoDto.Message);
+                else
+                    return Json(new { error = response.UnassignGroupToRoleInfoDto.Message });
+            }
+            return Json(new { error = "Invalid model state" });
+        }
     }
 }

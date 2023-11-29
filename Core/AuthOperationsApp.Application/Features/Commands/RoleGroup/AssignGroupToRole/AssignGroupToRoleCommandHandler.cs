@@ -1,5 +1,4 @@
 ﻿using AuthOperationsApp.Application.Abstractions.Services;
-using AuthOperationsApp.Application.DTOs.RoleGroup;
 using AutoMapper;
 using MediatR;
 
@@ -14,17 +13,16 @@ namespace AuthOperationsApp.Application.Features.Commands.RoleGroup.AssignGroupT
         public AssignGroupToRoleCommandHandler(IRoleGroupService roleGroupService, IMapper mapper)
         {
             _roleGroupService = roleGroupService;
-            _mapper = mapper;
-         
+            _mapper = mapper;        
         }
 
         public async Task<AssignGroupToRoleCommandResponse> Handle(AssignGroupToRoleCommandRequest request, CancellationToken cancellationToken)
         {
-            //var res = await _roleGroupService.AssignGroupToRoleAsync(request.GroupId, request.RoleId);
-            //var assignGroupToRoleInfoDto = _mapper.Map<AssignGroupToRoleInfoDto>(res);
+            //RoleId ajax ile gelecek
+            var response = await _roleGroupService.AssignGroupToRoleAsync(request.GroupId, request.RoleId);
+           
 
-            //return new AssignGroupToRoleCommandResponse(assignGroupToRoleInfoDto);
-            return null;
+            return new AssignGroupToRoleCommandResponse(response);
         }
     }
 }
