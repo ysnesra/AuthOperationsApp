@@ -68,64 +68,64 @@ namespace AuthOperationsApp.Persistence.Contexts
             modelBuilder.Entity<Role>().HasData(
                 new Role
                 {
-                    Id = Guid.Parse("22905372-470f-4b15-8876-f61b72691841"),
-                    Name = "Taleplerim sayfasına girme yetki",                  
+                    Id = Guid.Parse("9e70e434-e56f-4679-8d80-f471c914ddb4"),
+                    Name = "Taleplerim sayfasına girme yetkisi",                  
                 },
                 new Role
                 {
-                    Id = Guid.Parse("23905372-470f-4b15-8876-f61b72691842"),
+                    Id = Guid.Parse("679dddf8-37e9-4012-9f8b-e0c5ebb747b8"),
                     Name = "Satışlarım sayfasına girme yetkisi",                 
                 },
                 new Role
                 {
-                    Id = Guid.Parse("24905372-470f-4b15-8876-f61b72691843"),
+                    Id = Guid.Parse("c2d99a10-0427-4afc-8300-246b985128ec"),
                     Name = "Dashboard yetkisi",                   
                 },
                 new Role
                 {
-                    Id = Guid.Parse("25905372-470f-4b15-8876-f61b72691844"),
-                    Name = "Wallboard yetkisi",                   
+                    Id = Guid.Parse("8da091a4-959f-4a89-aca9-fd50d6c4a836"),
+                    Name = "Taleplerim yetkisi",                   
                 },
                  new Role
                  {
-                     Id = Guid.Parse("26005372-470f-4b15-8876-f61b72691842"),
+                     Id = Guid.Parse("23e2e4b5-415f-4087-afea-4c36bfa02dec"),
                      Name = "Wallboard yetkisi",
                  },
                 new Role
                 {
-                    Id = Guid.Parse("27105372-470f-4b15-8876-f61b72691841"),
+                    Id = Guid.Parse("5c9c718f-61fa-4d5b-8924-7d5a8e559df5"),
                     Name = "İlanlarım yetkisi",                   
                 });
 
             modelBuilder.Entity<Group>().HasData(
                new Group
                {
-                   Id = Guid.Parse("52005372-470f-4b15-8876-f61b72691841"),
+                   Id = Guid.Parse("2538688c-3339-428c-8197-dab8e3d8842b"),
                    Name = "Mağaza müdürleri grubu",
                },
                new Group
                {
-                   Id = Guid.Parse("53005372-470f-4b15-8876-f61b72691842"),
+                   Id = Guid.Parse("a00eb1f5-a62f-4be6-ad58-9d910f6f2948"),
                    Name = "Satış müdürleri grubu",
                },
                new Group
                {
-                   Id = Guid.Parse("54905372-470f-4b15-8876-f61b72691843"),
+                   Id = Guid.Parse("73335711-f124-418c-95bf-107bdfca4d90"),
                    Name = "IK çalışanları grubu",
                },
                new Group
                {
-                   Id = Guid.Parse("55805372-470f-4b15-8876-f61b72691844"),
+                   Id = Guid.Parse("03be5560-b263-43d2-ab28-0206b58098f1"),
                    Name = "Raporlama grubu",
                },
                 new Group
                 {
-                    Id = Guid.Parse("56005372-470f-4b15-8876-f61b72691842"),
+                    Id = Guid.Parse("449f4f14-ffb6-4ff7-ab32-93d0fb430602"),
                     Name = "IT destek grubu",
                 },
                new Group
                {
-                   Id = Guid.Parse("27105372-470f-4b15-8876-f61b72691841"),
+                   Id = Guid.Parse("02c551e4-d201-41ce-ba11-98c218d91bcf"),
                    Name = "Eğitim destek grubu",
                });
 

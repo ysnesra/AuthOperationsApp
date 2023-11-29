@@ -30,10 +30,10 @@
                         <tr>
                             <td>@role.Name</td>
                             <td>
-                                <a asp-action="AllGroupsByRole" asp-controller="RoleGroup" asp-route-roleId="@ViewBag.RoleId" asp-route-roleId="@role.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Yetkinin Bağlı Olduğu Gruplar</a>
+                                <a asp-action="AllGroupsByRole" asp-controller="RoleGroup"  asp-route-roleId="@role.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Yetkinin Bağlı Olduğu Gruplar</a>
                             </td>
                             <td>
-                                <a asp-action="UpdateRole" asp-controller="Role" asp-route-roleId="@ViewBag.RoleId" asp-route-roleId="@role.Id" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i>  Düzenle</a>
+                                <a asp-action="UpdateRole" asp-controller="Role" asp-route-roleId="@role.Id" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i>  Düzenle</a>
                             </td>
                         </tr>
                     }
@@ -43,3 +43,21 @@
 
     </div>
 </div>
+
+@*
+<td>
+    <a id="allGroupsButton" href="#" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Yetkinin Bağlı Olduğu Gruplar</a>
+
+</td>
+
+<script>
+    document.getElementById("allGroupsButton").addEventListener("click", function () {
+        // İlk aksiyonun tetiklenmesi
+        window.location.href = "/RoleGroup/AllGroupsByRole?roleId=@role.Id";
+
+        // İkinci aksiyonun tetiklenmesi
+        $.get("/RoleGroup/GroupsNoRole?roleId=@role.Id");
+    });
+</script>
+
+ *@
