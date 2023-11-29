@@ -1,5 +1,4 @@
 ﻿
-@model GetAllRoleQueryResponse
 
 @{
     ViewData["Title"] = "Yetkiler";
@@ -11,54 +10,160 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-body">
-       
-
-        <div class="col-md-12">
-            <table class="table table-bordered table-striped mt-4 table-responsive">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Yetkiler</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var role in Model.RoleListInfoDtos.RoleListDto)
-                    {
-                        <tr>
-                            <td>@role.Name</td>
-                            <td>
-                                <a asp-action="AllGroupsByRole" asp-controller="RoleGroup"  asp-route-roleId="@role.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Yetkinin Bağlı Olduğu Gruplar</a>
-                            </td>
-                            <td>
-                                @* <a asp-action="UpdateRole" asp-controller="Role" asp-route-roleId="@role.Id" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i>  Düzenle</a> *@
-                                <a  data-toggle="modal" data-target="#updateRoleModal" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i> Düzenle</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
+<div clas="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped mt-4 table-responsive">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Yetkiler</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="AllRoleContent">
+            </tbody>
+        </table>
     </div>
 </div>
 
-@*
-<td>
-    <a id="allGroupsButton" href="#" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Yetkinin Bağlı Olduğu Gruplar</a>
 
-</td>
 
-<script>
-    document.getElementById("allGroupsButton").addEventListener("click", function () {
-        // İlk aksiyonun tetiklenmesi
-        window.location.href = "/RoleGroup/AllGroupsByRole?roleId=@role.Id";
+<div class="modal fade" id="updateRoleModal" tabindex="-1" role="dialog" aria-labelledby="updateRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateRoleModalLabel">Yetki Güncelleme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-        // İkinci aksiyonun tetiklenmesi
-        $.get("/RoleGroup/GroupsNoRole?roleId=@role.Id");
-    });
-</script>
 
- *@
+                <input type="text" id="txtRoleName" class="form-control" />
+
+                <input type="hidden" id="txtRoleId"  />
+
+
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btnRoleUpdate" type="submit" class="btn btn-dark">Güncelle</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            GetAllRole();
+
+        });
+
+
+
+        function GetAllRole() {
+
+            $.ajax({
+                type: "POST",
+                url: "/Role/GetAllRoles",
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    var data = result;
+                    console.log(data);
+                    console.log(data.length);
+                    var row = "";
+                 
+                    $.each(data, function (k, v) {
+
+                        row += `<tr>
+                            <td>${v["name"]}</td>
+                            <td>
+                             <a href="/RoleGroup/AllGroupsByRole/${v["id"]}" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Yetkinin Bağlı Olduğu Gruplar</a>
+                            </td>
+                            <td>
+                            <a data-name="${v["name"]}" data-id="${v["id"]}"  class="btn btn-warning btnEdit"><i class="fa-solid fa-cart-plus"></i> Düzenle </a>
+                            </td>
+                        </tr>`
+
+                    });
+
+
+                    $("#AllRoleContent").html(row);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+
+        }
+
+
+        $("#AllRoleContent").on("click", ".btnEdit", function () {
+           
+            var name = $(this).data("name");
+            console.log("Düğmeye tıklandı: name = " + name);
+
+            var id = $(this).data("id");
+            console.log("Düğmeye tıklandı: Role ID = " + id);
+
+            
+            $("#updateRoleModal").modal("show");
+
+            $("#txtRoleName").val(name);
+            $("#txtRoleId").val(id);
+
+
+
+
+
+
+        });
+
+
+
+
+        $("#btnRoleUpdate").on("click", function () {
+
+           
+           
+
+            var UpdateRoleRequestDto = {}
+            UpdateRoleRequestDto.Id = $("#txtRoleId").val();
+            UpdateRoleRequestDto.Name = $("#txtRoleName").val();
+
+
+            $.ajax({
+                type: "POST",
+                url: "/Role/UpdateRole",
+                data: JSON.stringify(UpdateRoleRequestDto),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    
+                    console.log(result);
+                    $("#updateRoleModal").modal("hide");
+                    GetAllRole();
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+
+        });
+
+
+
+
+
+
+    </script>
+}

@@ -1,4 +1,5 @@
-﻿using AuthOperationsApp.Application.Features.Commands.RoleGroup.AssignGroupToRole;
+﻿using AuthOperationsApp.Application.DTOs.RoleGroup;
+using AuthOperationsApp.Application.Features.Commands.RoleGroup.AssignGroupToRole;
 using AuthOperationsApp.Application.Features.Commands.RoleGroup.UnassignGroupToRole;
 using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupByRole;
 using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupNoRole;
@@ -57,20 +58,21 @@ namespace AuthOperationsApp.WEB.Controllers
 
             if (!response.AllGroupNoRoleInfoDto.Success)
             {
-                return Json(response.AllGroupNoRoleInfoDto.Message);
+                Json(new { error = response.AllGroupNoRoleInfoDto.Message });
             }
-            return Json(new { error = response.AllGroupNoRoleInfoDto.Message });
+
+            return Json(response.AllGroupNoRoleInfoDto.AllGroupNoRoleDto);
         }
 
         //Role Grup atama
         [HttpPost]
-        public async Task<JsonResult> AssignGroupToRole([FromBody] string GroupId , string RoleId)
+        public async Task<JsonResult> AssignGroupToRole([FromBody] AssignGroupRequestDto requestDto)
         {
             if (ModelState.IsValid)
             {
                 AssignGroupToRoleCommandRequest request = new AssignGroupToRoleCommandRequest();
-                request.GroupId = Guid.Parse(GroupId);
-                request.RoleId = Guid.Parse(RoleId);
+                request.GroupId = Guid.Parse(requestDto.GroupId);
+                request.RoleId = Guid.Parse(requestDto.RoleId);
 
                 AssignGroupToRoleCommandResponse response = await Mediator.Send(request);
 
@@ -79,18 +81,19 @@ namespace AuthOperationsApp.WEB.Controllers
                 else
                     return Json(new { error = response.AssignGroupToRoleInfoDto.Message });
             }
+
             return Json(new { error = "Invalid model state" });
         }
 
         //Roleden Grup atamasını kaldırma
         [HttpPost]
-        public async Task<JsonResult> UnassignGroupToRole([FromBody] string GroupId, string RoleId)
+        public async Task<JsonResult> UnassignGroupToRole([FromBody]UnassignGroupRequestDto requestDto)
         {
             if (ModelState.IsValid)
             {
                 UnassignGroupToRoleCommandRequest request = new UnassignGroupToRoleCommandRequest();
-                request.GroupId = Guid.Parse(GroupId);
-                request.RoleId = Guid.Parse(RoleId);
+                request.GroupId = Guid.Parse(requestDto.GroupId);
+                request.RoleId = Guid.Parse(requestDto.RoleId);
 
                 UnassignGroupToRoleCommandResponse response = await Mediator.Send(request);
 
@@ -101,5 +104,7 @@ namespace AuthOperationsApp.WEB.Controllers
             }
             return Json(new { error = "Invalid model state" });
         }
+
+
     }
 }

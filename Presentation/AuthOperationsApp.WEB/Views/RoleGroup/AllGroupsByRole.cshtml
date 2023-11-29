@@ -48,7 +48,8 @@
         $(document).ready(function () {
 
             GroupsByRole();
- 
+            AllGroups();
+
         });
 
 
@@ -80,11 +81,41 @@
         }
 
         $("#GroupsByRole").on("click", ".btnRoleDelete", function () {
-            var roleId = $(this).data("id");
-            console.log("Düğmeye tıklandı: Rol ID = " + roleId);
+          
+            var groupId = $(this).data("id");
+            console.log("Düğmeye tıklandı: groupıd ID = " + groupId);
             
+            var roleId = $("#RoleId").val();
+            console.log("Düğmeye tıklandı: Role ID = " + roleId);
+
             //Ajax ile gidip  
             //RoleGruptan Silecek
+
+           var UnassignGroupRequestDto  = {};
+
+            UnassignGroupRequestDto.RoleId = roleId;
+            UnassignGroupRequestDto.GroupId = groupId;
+
+
+            $.ajax({
+                type: "POST",
+                url: "/RoleGroup/UnassignGroupToRole",
+                data: JSON.stringify(UnassignGroupRequestDto),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+
+                    console.log(result);
+                    GroupsByRole();
+                    AllGroups();
+
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+
+
         });
 
 
@@ -106,6 +137,8 @@
                     var row = "";
                     $.each(data, function (k, v) {
 
+                        console.log(data);
+
                         row += `<li > <a href="#" role="button" class="btnRoleAdd"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
 
                     });
@@ -123,11 +156,42 @@
         }
 
         $("#GroupsNoRole").on("click", ".btnRoleAdd", function () {
-            var roleId = $(this).data("id");
-            console.log("Düğmeye tıklandı: Rol ID = " + roleId);
+            var groupId = $(this).data("id");
+            console.log("Düğmeye tıklandı: groupıd ID = " + groupId);
+
+            var roleId = $("#RoleId").val();
+            console.log("Düğmeye tıklandı: Role ID = " + roleId);
 
             //Ajax ile gidip
-            //RoleGrupba ekleyecek
+            //RoleGruptan Silecek
+
+            var AssignGroupRequestDto = {};
+
+            AssignGroupRequestDto.RoleId = roleId;
+            AssignGroupRequestDto.GroupId = groupId;
+
+
+            $.ajax({
+                type: "POST",
+                url: "/RoleGroup/AssignGroupToRole",
+                data: JSON.stringify(AssignGroupRequestDto),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+
+                    console.log(result);
+                    GroupsByRole();
+                    AllGroups();
+
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+
+
+
+
         });
    
     </script>

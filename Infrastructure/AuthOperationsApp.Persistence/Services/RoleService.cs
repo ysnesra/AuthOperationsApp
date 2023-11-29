@@ -29,16 +29,11 @@ namespace AuthOperationsApp.Persistence.Services
             var rolesDto = _mapper.Map<List<RoleListDto>>(roles);
             return rolesDto;
         }
-        public async Task<RoleByIdInfoDto> GetRoleByIdAsync(Guid id, bool tracking = true)
+        public async Task<RoleByIdDto> GetRoleByIdAsync(Guid id, bool tracking = true)
         {
             var roleDetail = await _roleReadRepository.GetByIdAsync(id);
-            if (roleDetail is null)
-                return new RoleByIdInfoDto
-                {
-                    Success = false,
-                    Message = $"Role doesn't exist."
-                };
-            var roleDetailDto = _mapper.Map<RoleByIdInfoDto>(roleDetail);
+          
+            var roleDetailDto = _mapper.Map<RoleByIdDto>(roleDetail);
             return roleDetailDto;
         }
 
@@ -46,12 +41,20 @@ namespace AuthOperationsApp.Persistence.Services
         public async Task<UpdateRoleInfoDto> UpdateAsync(UpdateRoleCommandRequest request,
            CancellationToken cancellationToken, bool tracking = false)
         {
-            var roleDto = await GetRoleByIdAsync(request.Id, true);           
-            var updateRoleInfoDto = _mapper.Map<UpdateRoleInfoDto>(roleDto);
+            var roleDto = await GetRoleByIdAsync(request.Id);
+            if (roleDto is null)
+                return new UpdateRoleInfoDto
+                {
+                    Success = false,
+                    Message = $"Role doesn't exist."
+                };
+          
+    
 
-            updateRoleInfoDto.UpdateRoleDto.Name = request.Name;
+            roleDto.Name =request.Name;
+  
+            var roleDb = _mapper.Map<Role>(roleDto);
 
-            var roleDb = _mapper.Map<Role>(updateRoleInfoDto.UpdateRoleDto.Name);
             var roleResponse = _roleWriteRepository.Update(roleDb);
           
             if (!roleResponse)

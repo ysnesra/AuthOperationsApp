@@ -34,10 +34,16 @@ namespace AuthOperationsApp.Persistence.Services
         }
 
         //Role atanmayan Gruplar
+    
         public async Task<List<AllGroupNoRoleDto?>> GetGroupsNoRoleAsync(Guid roleId)
         {
             var groupsInRole = await _roleGroupReadRepository.GetWhere(x => x.RoleId == roleId).ToListAsync();
-            var groupsNotInRole = await _groupReadRepository.GetAllDetailAsync(group => groupsInRole.Any(rg => rg.GroupId == group.Id));
+
+            var groupsInRoleIds = groupsInRole.Select(rg => rg.GroupId).ToList();
+
+            var groupsNotInRole = await _groupReadRepository
+                .GetWhere(group => !groupsInRoleIds.Contains(group.Id))
+                .ToListAsync();
 
             var groupsDto = _mapper.Map<List<AllGroupNoRoleDto>>(groupsNotInRole);
             return groupsDto;

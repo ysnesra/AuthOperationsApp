@@ -7,6 +7,7 @@ namespace AuthOperationsApp.Application.Constants
         public static string RolesListed = "Role listed succesfully.";
         public static string RolesListedFailed = "Role list not found."; 
 
+
         public static string GroupListed = "Group listed succesfully.";
         public static string GroupListedFailed = "Group list not found."; 
 

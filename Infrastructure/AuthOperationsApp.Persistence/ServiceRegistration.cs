@@ -3,6 +3,7 @@ using AuthOperationsApp.Application.Repositories;
 using AuthOperationsApp.Persistence.Contexts;
 using AuthOperationsApp.Persistence.Repositories;
 using AuthOperationsApp.Persistence.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -12,7 +13,9 @@ namespace AuthOperationsApp.Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services)
         {
-            services.AddDbContext<AuthOperationsAppDbContext>(options => { }, ServiceLifetime.Scoped);
+            services.AddDbContext<AuthOperationsAppDbContext>(options => {
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            }, ServiceLifetime.Scoped);
 
             services.AddHttpContextAccessor();
 

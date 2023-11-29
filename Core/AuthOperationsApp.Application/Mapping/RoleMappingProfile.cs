@@ -9,13 +9,15 @@ namespace AuthOperationsApp.Application.Mapping
         public RoleMappingProfile()
         {
             CreateMap<Role, RoleListDto>();
-            CreateMap<Role, RoleByIdInfoDto>().ReverseMap();
+            CreateMap<Role, RoleByIdDto>().ReverseMap();
 
-            CreateMap<RoleByIdInfoDto, UpdateRoleInfoDto>();
+            CreateMap<RoleByIdDto, UpdateRoleInfoDto>();
+
+            CreateMap<UpdateRoleInfoDto, RoleByIdDto>();
             CreateMap<UpdateRoleDto, Role>();
             CreateMap<Role, UpdateRoleInfoDto>();
 
-
+            CreateMap<Role, RoleByIdDto>();
         }
     }
 }
