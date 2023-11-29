@@ -1,4 +1,5 @@
-﻿using AuthOperationsApp.Application.Features.Queries.Role.GetAllRole;
+﻿using AuthOperationsApp.Application.Features.Commands.Role.UpdateRole;
+using AuthOperationsApp.Application.Features.Queries.Role.GetAllRole;
 using AuthOperationsApp.Infrastructure.Base;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +26,16 @@ namespace AuthOperationsApp.WEB.Controllers
             }
             return View(response);
         }
-        
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleCommandRequest request)
+        {
+            var response = await Mediator.Send(request);
+            if (!response.UpdateRoleInfoDto.Success)
+            {
+                return View(response.UpdateRoleInfoDto.Message);
+            }
+            return View(response);
+        }
     }
 }
