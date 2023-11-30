@@ -19,11 +19,9 @@ namespace AuthOperationsApp.WEB.Controllers
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AllRoles()
-        {
-           
+        {          
             return View();
         }
-
 
         [HttpPost]
         [AllowAnonymous]

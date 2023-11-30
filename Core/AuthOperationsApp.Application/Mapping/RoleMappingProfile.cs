@@ -1,4 +1,5 @@
 ﻿using AuthOperationsApp.Application.DTOs.Role;
+using AuthOperationsApp.Application.DTOs.RoleGroup;
 using AuthOperationsApp.Domain.Entities;
 using AutoMapper;
 
@@ -18,6 +19,9 @@ namespace AuthOperationsApp.Application.Mapping
             CreateMap<Role, UpdateRoleInfoDto>();
 
             CreateMap<Role, RoleByIdDto>();
+
+            CreateMap<Role, RoleByGroupDto>(); 
+            CreateMap<Role, AllRoleNoGroupDto>(); 
         }
     }
 }

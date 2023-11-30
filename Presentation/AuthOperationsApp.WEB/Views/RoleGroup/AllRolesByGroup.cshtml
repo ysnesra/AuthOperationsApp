@@ -1,8 +1,7 @@
 ﻿@{
-    ViewData["Title"] = "Gruplar";
+    ViewData["Title"] = "Roller";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 
 <div class="row">
@@ -12,30 +11,27 @@
 </div>
 
 
-
 <div class="card">
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <h5 class="card-title">Yetkinin Bağlı Olduğu Gruplar</h5>
-                <ul id="GroupsByRole">
+                <h5 class="card-title">Grubun Sahip Olduğu Yetkiler</h5>
+                <ul id="RolesByGroup">
                 </ul>
             </div>
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
-                <h5 class="card-title">Yetkinin Olmadığı Gruplar</h5>
-                <ul id="GroupsNoRole">
+                <h5 class="card-title">Grubun Sahip Olmadığı Yetkiler</h5>
+                <ul id="RolesNoGroup">
                 </ul>
             </div>
         </div>
 
-
     </div>
 </div>
 
-<input type="hidden" id="RoleId" value="@ViewBag.RoleId" />
-
+<input type="hidden" id="GroupId" value="@ViewBag.GroupId" />
 
 @section Scripts {
 
@@ -43,16 +39,17 @@
 
         $(document).ready(function () {
 
-            GroupsByRole();
-            GroupsNoRole();
+            RolesByGroup();
+            RolesNoGroup();
         });
 
-        function GroupsByRole() {
+        //Grubun sahip olduğu Yetkiler
+        function RolesByGroup() {
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/GroupsByRole",
-                data: JSON.stringify($("#RoleId").val()),
+                url: "/RoleGroup/RolesByGroup",
+                data: JSON.stringify($("#GroupId").val()),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
                     var data = result;
@@ -60,10 +57,10 @@
                     console.log(data.length);
                     var row = "";
                     $.each(data, function (k, v) {
-                        row += `<li > <a href="#" role="button" class="btnGroupDelete"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
+                        row += `<li > <a href="#" role="button" class="btnRoleDelete"  data-id="${v["id"]}"> ${v["name"]}  </a> </li>`;
                     });
 
-                    $("#GroupsByRole").html(row);
+                    $("#RolesByGroup").html(row);
                 },
                 error: function (ex) {
                     console.log(ex);
@@ -72,35 +69,31 @@
             });
         }
 
-        $("#GroupsByRole").on("click", ".btnGroupDelete", function () {
+        $("#RolesByGroup").on("click", ".btnRoleDelete", function () {
 
-            var groupId = $(this).data("id");
-            console.log("Düğmeye tıklandı: groupıd ID = " + groupId);
-
-            var roleId = $("#RoleId").val();
+            var roleId = $(this).data("id");
             console.log("Düğmeye tıklandı: Role ID = " + roleId);
+
+            var groupId = $("#GroupId").val();
+            console.log("Düğmeye tıklandı: Group ID = " + groupId);
 
             //Ajax ile gidip
             //RoleGruptan Silecek
 
-            // var unassignGroupRequestDto = {
-            //     RoleId: roleId,
-            //     GroupId: groupId
-            // };
-            var UnassignGroupRequestDto = {};
-            UnassignGroupRequestDto.RoleId = roleId;
-            UnassignGroupRequestDto.GroupId = groupId;
+            var UnassignRoleRequestDto = { };
+            UnassignRoleRequestDto.RoleId= roleId;
+            UnassignRoleRequestDto.GroupId= groupId;
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/UnassignGroupToRole",
-                data: JSON.stringify(UnassignGroupRequestDto),
+                url: "/RoleGroup/UnassignRoleToGroup",
+                data: JSON.stringify(UnassignRoleRequestDto),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
 
                     console.log(result);
-                    GroupsByRole();
-                    GroupsNoRole();
+                    RolesByGroup();
+                    RolesNoGroup();
                 },
                 error: function (ex) {
                     console.log(ex);
@@ -109,15 +102,15 @@
             });
         });
 
+    
+        //Grubun sahip olmadığı Yetkiler
 
-        //Yetkisi olmayan Tüm Grupların listelemesi
-
-        function GroupsNoRole() {
+        function RolesNoGroup() {
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/GroupsNoRole",
-                data: JSON.stringify($("#RoleId").val()),
+                url: "/RoleGroup/RolesNoGroup",
+                data: JSON.stringify($("#GroupId").val()),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
 
@@ -126,15 +119,11 @@
                     console.log(data.length);
                     var row = "";
                     $.each(data, function (k, v) {
-
                         console.log(data);
-
-                        row += `<li > <a href="#" role="button" class="btnGroupAdd"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
-
+                        row += `<li > <a href="#" role="button" class="btnRoleAdd"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
                     });
 
-                    $("#GroupsNoRole").html(row);
-
+                    $("#RolesNoGroup").html(row);
                 },
                 error: function (ex) {
                     console.log(ex);
@@ -143,30 +132,28 @@
             });
         }
 
-        $("#GroupsNoRole").on("click", ".btnGroupAdd", function () {
-            var groupId = $(this).data("id");
-            console.log("Düğmeye tıklandı: Group ID = " + groupId);
+        $("#RolesNoGroup").on("click", ".btnRoleAdd", function () {
 
-            var roleId = $("#RoleId").val();
+            var roleId = $(this).data("id");
             console.log("Düğmeye tıklandı: Role ID = " + roleId);
 
-            //Ajax ile gidip RoleGruba ekleyecek
+            var groupId = $("#GroupId").val();
+            console.log("Düğmeye tıklandı: Group ID = " + groupId);       
 
-            var AssignGroupRequestDto = {};
-            AssignGroupRequestDto.RoleId = roleId;
-            AssignGroupRequestDto.GroupId = groupId;
-
+            var AssignRoleRequestDto = {};
+            AssignRoleRequestDto.RoleId = roleId;
+            AssignRoleRequestDto.GroupId = groupId;
+            
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/AssignGroupToRole",
-                data: JSON.stringify(AssignGroupRequestDto),
+                url: "/RoleGroup/AssignRoleToGroup",
+                data: JSON.stringify(AssignRoleRequestDto),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
 
                     console.log(result);
-                    GroupsByRole();
-                    GroupsNoRole();
-
+                    RolesByGroup();
+                    RolesNoGroup();
                 },
                 error: function (ex) {
                     console.log(ex);
@@ -174,6 +161,6 @@
                 }
             });
         });
-    </script>
 
+    </script>
 }

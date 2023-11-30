@@ -5,7 +5,7 @@ using AuthOperationsApp.Application.DTOs.Group;
 using AutoMapper;
 using MediatR;
 
-namespace AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroup
+namespace AuthOperationsApp.Application.Features.Queries.Group.GetAllGroup
 {
     public class GetAllGroupQueryHandler : IRequestHandler<GetAllGroupQueryRequest, GetAllGroupQueryResponse>
     {

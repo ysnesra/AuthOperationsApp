@@ -13,19 +13,14 @@
 <div clas="row">
     <div class="col-md-12">
         <table class="table table-bordered table-striped mt-4 table-responsive">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Yetkiler</th>
-                    <th></th>
-                    <th></th>
-                </tr>
+            <thead class="thead-dark">               
             </thead>
             <tbody id="AllRoleContent">
+
             </tbody>
         </table>
     </div>
 </div>
-
 
 
 <div class="modal fade" id="updateRoleModal" tabindex="-1" role="dialog" aria-labelledby="updateRoleModalLabel" aria-hidden="true">
@@ -47,8 +42,8 @@
 
                
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button id="btnRoleUpdate" type="submit" class="btn btn-dark">Güncelle</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button id="btnRoleSave" type="submit" class="btn btn-dark">Kaydet</button>
                 </div>
 
 
@@ -66,8 +61,6 @@
             GetAllRole();
 
         });
-
-
 
         function GetAllRole() {
 
@@ -95,7 +88,6 @@
 
                     });
 
-
                     $("#AllRoleContent").html(row);
                 },
                 error: function (ex) {
@@ -106,7 +98,6 @@
 
         }
 
-
         $("#AllRoleContent").on("click", ".btnEdit", function () {
            
             var name = $(this).data("name");
@@ -114,32 +105,19 @@
 
             var id = $(this).data("id");
             console.log("Düğmeye tıklandı: Role ID = " + id);
-
             
             $("#updateRoleModal").modal("show");
 
             $("#txtRoleName").val(name);
             $("#txtRoleId").val(id);
 
-
-
-
-
-
         });
 
-
-
-
-        $("#btnRoleUpdate").on("click", function () {
-
-           
-           
+        $("#btnRoleSave").on("click", function () {      
 
             var UpdateRoleRequestDto = {}
             UpdateRoleRequestDto.Id = $("#txtRoleId").val();
             UpdateRoleRequestDto.Name = $("#txtRoleName").val();
-
 
             $.ajax({
                 type: "POST",
@@ -159,11 +137,5 @@
             });
 
         });
-
-
-
-
-
-
     </script>
 }

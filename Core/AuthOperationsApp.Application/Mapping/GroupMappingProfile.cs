@@ -11,12 +11,13 @@ namespace AuthOperationsApp.Application.Mapping
         public GroupMappingProfile()
         {
             CreateMap<Group, GroupByRoleDto>(); 
-
             CreateMap<Group, AllGroupNoRoleDto>(); 
+            CreateMap<Group, GroupListDto>();
 
-            CreateMap<Group, GroupListDto>(); 
-
-        }
-       
+            CreateMap<Group, GroupByIdDto>().ReverseMap();
+            CreateMap<Group, UpdateGroupInfoDto>();
+            CreateMap<Group, AllRoleNoGroupDto>();
+            
+        }   
     }
 }

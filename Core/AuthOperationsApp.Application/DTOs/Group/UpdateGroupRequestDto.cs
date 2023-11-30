@@ -1,8 +1,7 @@
 ﻿
-
-namespace AuthOperationsApp.Application.DTOs.Role
+namespace AuthOperationsApp.Application.DTOs.Group
 {
-    public class UpdateRoleRequestDto
+    public class UpdateGroupRequestDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

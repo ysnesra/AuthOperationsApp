@@ -11,6 +11,10 @@ namespace AuthOperationsApp.Application.Mapping
         {
             CreateMap<RoleGroup, AssignGroupToRoleDto>(); 
             CreateMap<RoleGroup, UnassignGroupToRoleDto>(); 
+
+            CreateMap<RoleGroup, AssignRoleToGroupDto>();
+            CreateMap<RoleGroup, UnassignRoleToGroupDto>();
+
         }
     }
 }

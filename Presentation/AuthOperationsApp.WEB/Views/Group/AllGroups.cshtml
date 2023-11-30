@@ -1,6 +1,4 @@
-﻿@model GetAllGroupQueryResponse
-
-@{
+﻿@{
     ViewData["Title"] = "Yetki Grupları";
 }
 
@@ -10,39 +8,131 @@
     </div>
 </div>
 
-<div class="card">
-    <div class="card-body">
 
-        <div class="col-md-12">
-            <table class="table table-bordered table-striped mt-4 table-responsive">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Yetki Grupları</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var group in Model.GroupListInfoDto.GroupListDto)
-                    {
-                        <tr>
-                            <td>@group.Name</td>
-                            <td>
-                                <a asp-action="AllRolesByGroupId" asp-controller="RoleGroup" asp-route-groupId="@group.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Grubun Yetkilerini Göster</a>
-                            </td>
-                            <td>
-                                <a asp-action="AllUsersByGroupId" asp-controller="UserGroup" asp-route-groupId="@group.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Bağlı Kullanıcıları Göster</a>
-                            </td>
-                            <td>
-                                @* <a asp-action="UpdateRole" asp-controller="Role" asp-route-roleId="@role.Id" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i>  Düzenle</a> *@
-                                <a data-toggle="modal" data-target="#updateRoleModal" class="btn btn-warning"><i class="fa-solid fa-cart-plus"></i> Düzenle</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
+<div clas="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped mt-4 table-responsive">
+            <thead class="thead-dark">
+            </thead>
+            <tbody id="AllGroupContent">
+            </tbody>
+        </table>
     </div>
 </div>
+
+<div class="modal fade" id="updateGroupModal" tabindex="-1" role="dialog" aria-labelledby="updateGroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateRoleModalLabel">Grup Güncelleme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input type="text" id="txtGroupName" class="form-control" />
+
+                <input type="hidden" id="txtGroupId" />
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button id="btnGroupSave" type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            GetAllGroup();
+
+        });
+
+        function GetAllGroup() {
+
+            $.ajax({
+                type: "POST",
+                url: "/Group/GetAllGroups",
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    var data = result;
+                    console.log(data);
+                    console.log(data.length);
+                    var row = "";
+
+                    $.each(data, function (k, v) {
+
+                        row += 
+                        `<tr>
+                            <td> ${v["name"]} </td>
+                            <td>
+                               <a href="/RoleGroup/AllRolesByGroup/${v["id"]}" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Grubun Yetkilerini Göster</a>
+                            </td>
+                            <td>
+                                <a href="/RoleGroup/AllUserByGroup/${v["id"]}" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Bağlı Kullanıcıları Göster</a>
+                            </td>                           
+                            <td>
+                                <a data-name="${v["name"]}" data-id="${v["id"]}"  class="btn btn-warning btnEdit"><i class="fa-solid fa-cart-plus"></i> Düzenle </a>
+                            </td>
+                        </tr>`
+                    });
+
+                    $("#AllGroupContent").html(row);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+        }
+
+        //
+        $("#AllGroupContent").on("click", ".btnEdit", function () {
+
+            var name = $(this).data("name");
+            console.log("Düğmeye tıklandı: name = " + name);
+
+            var id = $(this).data("id");
+            console.log("Düğmeye tıklandı: Role ID = " + id);
+
+            $("#updateGroupModal").modal("show");
+
+            $("#txtGroupName").val(name);
+            $("#txtGroupId").val(id);
+
+        });
+
+        $("#btnGroupSave").on("click", function () {
+
+            var UpdateGroupRequestDto = {}
+            UpdateGroupRequestDto.Id = $("#txtGroupId").val();
+            UpdateGroupRequestDto.Name = $("#txtGroupName").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Group/UpdateGroup",
+                data: JSON.stringify(UpdateGroupRequestDto),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    console.log(result);
+
+                    $("#updateGroupModal").modal("hide");
+                    GetAllGroup();
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+
+        });
+
+
+    </script>
+}
+
