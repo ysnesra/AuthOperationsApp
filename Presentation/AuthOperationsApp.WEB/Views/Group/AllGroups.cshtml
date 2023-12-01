@@ -74,7 +74,7 @@
                                <a href="/RoleGroup/AllRolesByGroup/${v["id"]}" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Grubun Yetkilerini Göster</a>
                             </td>
                             <td>
-                                <a href="/RoleGroup/AllUserByGroup/${v["id"]}" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Bağlı Kullanıcıları Göster</a>
+                                <a href="/UserGroup/AllUsersByGroup/${v["id"]}" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Bağlı Kullanıcıları Göster</a>
                             </td>                           
                             <td>
                                 <a data-name="${v["name"]}" data-id="${v["id"]}"  class="btn btn-warning btnEdit"><i class="fa-solid fa-cart-plus"></i> Düzenle </a>
@@ -91,7 +91,7 @@
             });
         }
 
-        //
+       
         $("#AllGroupContent").on("click", ".btnEdit", function () {
 
             var name = $(this).data("name");

@@ -1,6 +1,8 @@
 ﻿using AuthOperationsApp.Application.Abstractions.Services;
+using AuthOperationsApp.Application.DTOs.User;
 using AuthOperationsApp.Application.Repositories;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthOperationsApp.Persistence.Services
 {
@@ -15,6 +17,14 @@ namespace AuthOperationsApp.Persistence.Services
             _mapper = mapper;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
+        }
+        
+            public async Task<List<UserListDto?>> GetAllUserAsync()
+        {
+            var users = await _userReadRepository.GetAll().ToListAsync();
+
+            var usersDto = _mapper.Map<List<UserListDto>>(users);
+            return usersDto;
         }
     }
 }

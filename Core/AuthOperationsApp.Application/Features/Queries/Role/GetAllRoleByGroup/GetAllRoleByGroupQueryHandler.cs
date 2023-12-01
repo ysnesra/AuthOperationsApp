@@ -24,19 +24,19 @@ namespace AuthOperationsApp.Application.Features.Queries.Role.GetAllRoleByGroup
         {
             List<RoleByGroupDto?> groups = await _roleGroupService.GetRolesByGroupIdAsync(request.GroupId);
 
-            RoleByGroupInfoDto groupByRoleInfoDto = new RoleByGroupInfoDto();
+            RoleByGroupInfoDto roleByGroupInfoDto = new RoleByGroupInfoDto();
             if (groups is null)
             {
-                groupByRoleInfoDto.Success = false;
-                groupByRoleInfoDto.Message = Messages.GroupsBelongingRoleNotFound;
-                groupByRoleInfoDto.RoleByGroupDto = [];
-                return new GetAllRoleByGroupQueryResponse(groupByRoleInfoDto);
+                roleByGroupInfoDto.Success = false;
+                roleByGroupInfoDto.Message = Messages.GroupsBelongingRoleNotFound;
+                roleByGroupInfoDto.RoleByGroupDto = [];
+                return new GetAllRoleByGroupQueryResponse(roleByGroupInfoDto);
 
             }
-            groupByRoleInfoDto.Success = true;
-            groupByRoleInfoDto.Message = Messages.GroupsBelongingRoleSuccess;
-            groupByRoleInfoDto.RoleByGroupDto = groups;
-            return new GetAllRoleByGroupQueryResponse(groupByRoleInfoDto);
+            roleByGroupInfoDto.Success = true;
+            roleByGroupInfoDto.Message = Messages.GroupsBelongingRoleSuccess;
+            roleByGroupInfoDto.RoleByGroupDto = groups;
+            return new GetAllRoleByGroupQueryResponse(roleByGroupInfoDto);
         }
     }
 }

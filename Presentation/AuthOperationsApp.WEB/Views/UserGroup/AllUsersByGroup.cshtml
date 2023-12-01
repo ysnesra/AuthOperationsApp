@@ -1,8 +1,166 @@
 ﻿
 @{
-    ViewData["Title"] = "AllUsersByGroup";
+    ViewData["Title"] = "Kullanıcılar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>AllUsersByGroup</h1>
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="card-title">Gruba Bağlı Olan Kullanıcılar</h5>
+                <ul id="UsersByGroup">
+                </ul>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <h5 class="card-title">Gruba Bağlı Olan Kullanıcılar</h5>
+                <ul id="UsersNoGroup">
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<input type="hidden" id="GroupId" value="@ViewBag.GroupId" />
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            UsersByGroup();
+            UsersNoGroup();
+        });
+
+        //Gruba Bağlı Kullanıcılar
+        function UsersByGroup() {
+
+            $.ajax({
+                type: "POST",
+                url: "/UserGroup/UsersByGroup",
+                data: JSON.stringify($("#GroupId").val()),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    var data = result;
+                    console.log(data);
+                    console.log(data.length);
+                    var row = "";
+                    $.each(data, function (k, v) {
+                        row += `<li > <a href="#" role="button" class="btnUserDelete"  data-id="${v["id"]}" > ${v["fullName"]}  </a> </li>`;
+                    });
+
+                    $("#UsersByGroup").html(row);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    alert("An error occurred while processing the request.");
+                }
+            });
+        }
+
+        $("#UsersByGroup").on("click", ".btnUserDelete", function () {
+
+            var userId = $(this).data("id");
+            console.log("Düğmeye tıklandı: User ID = " + userId);
+
+            var groupId = $("#GroupId").val();
+            console.log("Düğmeye tıklandı: Group ID = " + groupId);
+
+
+            var UnassignUserRequestDto = {};
+            UnassignUserRequestDto.UserId = userId;
+            UnassignUserRequestDto.GroupId = groupId;
+
+            $.ajax({
+                type: "POST",
+                url: "/UserGroup/UnassignUserToGroup",
+                data: JSON.stringify(UnassignUserRequestDto),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+
+                    console.log(result);
+                    UsersByGroup();
+                    UsersNoGroup();
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    alert("An error occurred while processing the request.");
+                }
+            });
+        });
+
+
+        //Grubta olmayan Kullanıcılar
+
+        function UsersNoGroup() {
+
+            $.ajax({
+                type: "POST",
+                url: "/UserGroup/UsersNoGroup",
+                data: JSON.stringify($("#GroupId").val()),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+
+                    var data = result;
+                    console.log(data);
+                    console.log(data.length);
+                    var row = "";
+                    $.each(data, function (k, v) {
+                        console.log(data);
+                        row += `<li > <a href="#" role="button" class="btnUserAdd"  data-id="${v["id"]}" > ${v["fullName"]}  </a> </li>`;
+                    });
+
+                    $("#UsersNoGroup").html(row);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    alert("An error occurred while processing the request.");
+                }
+            });
+        }
+
+        $("#UsersNoGroup").on("click", ".btnUserAdd", function () {
+
+            var userId = $(this).data("id");
+            console.log("Düğmeye tıklandı: User ID = " + userId);
+
+            var groupId = $("#GroupId").val();
+            console.log("Düğmeye tıklandı: Group ID = " + groupId);
+
+            var AssignUserRequestDto = {};
+            AssignUserRequestDto.UserId = userId;
+            AssignUserRequestDto.GroupId = groupId;
+
+            $.ajax({
+                type: "POST",
+                url: "/UserGroup/AssignUserToGroup",
+                data: JSON.stringify(AssignUserRequestDto),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+
+                    console.log(result);
+                    UsersByGroup();
+                    UsersNoGroup();
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    alert("An error occurred while processing the request.");
+                }
+            });
+        });
+
+    </script>
+}
 
