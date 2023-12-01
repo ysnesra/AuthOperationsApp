@@ -36,6 +36,8 @@ namespace AuthOperationsApp.Application.Constants
         public static string RoleNotExist = $"Role doesn't exist.";
         public static string UpdateGroupFailed = $"Failed to update role.";
         public static string GroupNotExist = $"Role doesn't exist.";
+        public static string UpdateUserFailed = $"Failed to update user.";
+        public static string UserNotExist = $"User doesn't exist.";
 
         public static string GroupsBelongingRoleNotFound = "Groups belongig role not found.";
         public static string GroupsBelongingRoleSuccess = "Groups belongig rolelisted succesfully.";
@@ -43,6 +45,6 @@ namespace AuthOperationsApp.Application.Constants
         public static string GroupsWithoutAssignRolesNotFound = "Groups without assigned roles not found.";
         public static string GroupsWithoutAssignRolesSuccess = "Groups without assigned roles listed succesfully.";
 
-        
+       
     }
 }

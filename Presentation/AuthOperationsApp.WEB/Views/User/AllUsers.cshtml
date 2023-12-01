@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewData["Title"] = "Kullanıcılar";
+}
+
+
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div clas="row">
+    <div class="col-md-12">
+        <table class="table table-bordered table-striped mt-4 table-responsive">
+            <thead class="thead-dark">
+            </thead>
+            <tbody id="AllUserContent">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateUserModalLabel">Kullanıcı Güncelleme</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <input type="text" id="txtFullName" class="form-control" />
+
+                <input type="hidden" id="txtUserId" />
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button id="btnUserSave" type="submit" class="btn btn-dark">Kaydet</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+            GetAllUser();
+
+        });
+
+        function GetAllUser() {
+
+            $.ajax({
+                type: "POST",
+                url: "/User/GetAllUsers",
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+                    var data = result;
+                    console.log(data);
+                    console.log(data.length);
+                    var row = "";
+
+                    $.each(data, function (k, v) {
+
+                        row += `<tr>
+                                    <td>${v["fullName"]}</td>
+                                    <td>
+                                     <a href="/UserGroup/AllGroupsByUser/${v["id"]}" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i>  Kullanıcının Bağlı Olduğu Gruplar</a>
+                                    </td>
+                                    <td>
+                                    <a data-name="${v["fullName"]}" data-id="${v["id"]}"  class="btn btn-warning btnEdit"><i class="fa-solid fa-cart-plus"></i> Düzenle </a>
+                                    </td>
+                                </tr>`
+
+                    });
+
+                    $("#AllUserContent").html(row);
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+
+        }
+
+        $("#AllUserContent").on("click", ".btnEdit", function () {
+
+            var name = $(this).data("name");
+            console.log("Düğmeye tıklandı: name = " + name);
+
+            var id = $(this).data("id");
+            console.log("Düğmeye tıklandı: User ID = " + id);
+
+            $("#updateUserModal").modal("show");
+
+            $("#txtFullName").val(name);
+            $("#txtUserId").val(id);
+
+        });
+
+        $("#btnUserSave").on("click", function () {
+
+            var UpdateUserRequestDto = {}
+            UpdateUserRequestDto.Id = $("#txtUserId").val();
+            UpdateUserRequestDto.FullName = $("#txtFullName").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/User/UpdateUser",
+                data: JSON.stringify(UpdateUserRequestDto),
+                contentType: 'application/json; charset=utf-8',
+                success: function (result) {
+
+                    console.log(result);
+                    $("#updateUserModal").modal("hide");
+                    GetAllUser();
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    //   alert("An error occurred while processing the request.");
+                }
+            });
+
+        });
+    </script>
+}

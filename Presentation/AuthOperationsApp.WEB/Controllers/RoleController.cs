@@ -1,7 +1,6 @@
 ﻿using AuthOperationsApp.Application.DTOs.Role;
 using AuthOperationsApp.Application.Features.Commands.Role.UpdateRole;
 using AuthOperationsApp.Application.Features.Queries.Role.GetAllRole;
-using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupByRole;
 using AuthOperationsApp.Infrastructure.Base;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

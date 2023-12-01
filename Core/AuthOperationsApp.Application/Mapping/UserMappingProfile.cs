@@ -1,5 +1,4 @@
 ﻿
-using AuthOperationsApp.Application.DTOs.RoleGroup;
 using AuthOperationsApp.Application.DTOs.User;
 using AuthOperationsApp.Application.DTOs.UserGroup;
 using AuthOperationsApp.Domain.Entities;
@@ -15,7 +14,12 @@ namespace AuthOperationsApp.Application.Mapping
 
             CreateMap<User, AllUserNoGroupDto>();
             
-            CreateMap<User, UserListDto>(); 
+            CreateMap<User, UserListDto>();
+
+            CreateMap<User, UpdateUserInfoDto>();
+            CreateMap<User, UserByIdDto>().ReverseMap();
+
         }
+           
     }
 }
