@@ -61,9 +61,7 @@ AutoMapper kütüphanesi kullanılırak farklı veri modeli arasında dönüşü
 
 _Dashboard Yetkisinin Gruplarını Ayarlama Sayfası:_ 
 
-|![3Gruplar](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/5aaeb07c-216d-4166-88b7-ee4ffe56f5e8)
-  |![4GruplarAtama](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/39a56af6-73d9-4575-91e7-24d7cebdb1a8)
- |
+|![3Gruplar](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/5aaeb07c-216d-4166-88b7-ee4ffe56f5e8)  |![4GruplarAtama](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/39a56af6-73d9-4575-91e7-24d7cebdb1a8) |
 |--|--|
 |  |  |
 
@@ -72,10 +70,7 @@ _Dashboard Yetkisinin Gruplarını Ayarlama Sayfası:_
 
 _Yetki İsmini Güncelleme:_ 
 
-|![5YetkiGüncellme](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/aab91361-e208-4716-aa9c-36fd056152f6)
-
-  |![6GüncelYekiler](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/3e365428-97a7-44f7-9485-b4cb2264c7cd)
- |
+|![5YetkiGüncellme](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/aab91361-e208-4716-aa9c-36fd056152f6)  |![6GüncelYekiler](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/3e365428-97a7-44f7-9485-b4cb2264c7cd) |
 |--|--|
 |  |  |
 
@@ -93,10 +88,7 @@ _Yetki İsmini Güncelleme:_
 
 _Raporlama Grubunun Yetkilerini Ayarlama Sayfası:_ 
 
-|![8Roller](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/41aac5c2-b164-4c81-b1ac-a80e49eea07f)
-
-  |![9RolAtama](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/6968374c-189b-4dd8-8234-85dd8df2540f)
- |
+|![8Roller](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/41aac5c2-b164-4c81-b1ac-a80e49eea07f)  |![9RolAtama](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/6968374c-189b-4dd8-8234-85dd8df2540f) |
 |--|--|
 |  |  |
 
@@ -106,20 +98,17 @@ _Raporlama Grubunun Yetkilerini Ayarlama Sayfası:_
  
 _Raporlama Grubunun Kullanıcılarını Ayarlama Sayfası:_ 
 
-|![10Kullanıcılar](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/56949f52-f68a-490d-b90e-625cdea83116)
-
-  |![11KullanıcıAtama](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/02cab629-d5c6-4e3d-abe3-1641d1a73394)
- |
+|![10Kullanıcılar](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/56949f52-f68a-490d-b90e-625cdea83116)  |![11KullanıcıAtama](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/02cab629-d5c6-4e3d-abe3-1641d1a73394) |
 |--|--|
 |  |  |
+
 
  *****
 
 _Yetki İsmini Güncelleme:_ 
 
-|![12GrupGüncelleme](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/5b853760-067d-4b05-a8fb-95b46e064f9d)
-
-  |![13GüncelGrup](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/a6ac86b5-7b53-4f22-b8bd-b2023a251063)
- |
+|![12GrupGüncelleme](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/5b853760-067d-4b05-a8fb-95b46e064f9d)  |![13GüncelGrup](https://github.com/ysnesra/AuthOperationsApp/assets/104023688/a6ac86b5-7b53-4f22-b8bd-b2023a251063) |
 |--|--|
 |  |  |
+
+
