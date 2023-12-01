@@ -17,16 +17,16 @@ AutoMapper kütüphanesi kullanılırak farklı veri modeli arasında dönüşü
 
 
 *****
-*-Kullanıcı Anasayfadaki Menüden ayarlamak istediği linke tıklayabilir:
+*-Kullanıcı Anasayfadaki Menüden ayarlamak istediği linke tıklayabilir
 
-    _⦁	Yetkiler_   -> Yetkiler sayfasına yönlendirilir. Kullanıcı tüm yetkileri görebilir; 
+    ⦁	Yetkiler  -> Yetkiler sayfasına yönlendirilir. Kullanıcı tüm yetkileri görebilir; 
     
                        "Yetkinin bağlı olduğu Grupları" butonu ile istediği yetkiye Grup ekleyip ve kaldırabilir.
                        
                        "Düzenle" butonu ile Yetki ismini değiştirebilir.       
 
                        
-    _⦁	Yetki Grupları_  -> Yetki Grupları sayfasına yönlendirilir. Kullanıcı tüm grupları görebilir; 
+    ⦁	Yetki Grupları  -> Yetki Grupları sayfasına yönlendirilir. Kullanıcı tüm grupları görebilir; 
     
                        "Grubun Yetkilerini Göster" butonu ile istediği gruba Yetki ekleyip ve kaldırabilir.
                        
@@ -35,14 +35,13 @@ AutoMapper kütüphanesi kullanılırak farklı veri modeli arasında dönüşü
                        "Düzenle" butonu ile Grup ismini değiştirebilir.       
 
     
-    _⦁	Kullanıcılar_ -> Kullanıcılar sayfasına yönlendirilir. Tüm Kullanıcılar listelenir; 
+    ⦁	Kullanıcılar -> Kullanıcılar sayfasına yönlendirilir. Tüm Kullanıcılar listelenir; 
     
                        "Kullanıcının Gruplarını Göster" butonu ile istediği kullanıcıya Grup ekleyip ve kaldırabilir.
                        
                        "Düzenle" butonu ile Kullanıcı ismini değiştirebilir.      
 
 
-*****
 
 
  _Anasayfa:_ 
