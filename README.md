@@ -6,7 +6,7 @@ Uygulama da; DDD(Domain Dream Development) Tekniği ile Onion Architecture mimar
 
 Veritabanı olarak MsSQL ve ORM Toollarından EF Core , tasarım yaklaşımı olarak da CodeFirst kullanılmıştır.
 
-Proje Docker ortamında Distruburted olarak oluşturulmuştur.
+Proje Docker ortamında Distributed olarak oluşturulmuştur.
 
 
 Veritabanı işlemlerini soyutlama ve modülerleştirme için Repository Design Pattern tasarım deseni ve Bağımlılıkları yönetmek için Dependency Injection yapısı kullanılmıştır.
