@@ -37,7 +37,7 @@ namespace AuthOperationsApp.WEB.Controllers
            
             GetAllGroupByRoleQueryRequest request=new GetAllGroupByRoleQueryRequest();
             request.RoleId = Guid.Parse(RoleId);
-            GetAllGroupByRoleQueryResponse response = await Mediator.Send(request);
+            GetAllGroupByUserQueryResponse response = await Mediator.Send(request);
 
             if (response.GroupByRoleInfoDto.Success)
                 return Json(response.GroupByRoleInfoDto.GroupByRoleDto);

@@ -9,5 +9,9 @@ namespace AuthOperationsApp.Application.Abstractions.Services
         Task<List<AllUserNoGroupDto?>> GetUserNoGroupAsync(Guid groupId);
         Task<AssignUserToGroupInfoDto> AssignUserToGroupAsync(Guid groupId, Guid userId);
         Task<UnassignUserToGroupInfoDto> UnassignUserToGroupAsync(Guid groupId, Guid userId);
+        Task<List<GroupByUserDto>> GetGroupsByUserIdAsync(Guid userId, bool tracking = false);
+        Task<List<AllGroupNoUserDto>> GetGroupsNoUserAsync(Guid userId);
+        Task<AssignGroupToUserInfoDto> AssignGroupToUserAsync(Guid groupId, Guid userId);
+        Task<UnassignGroupToUserInfoDto> UnassignGroupToUserAsync(Guid groupId, Guid userId);
     }
 }

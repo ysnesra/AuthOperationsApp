@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewData["Title"] = "Gruplar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,15 +17,15 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-4">
-                <h5 class="card-title">Yetkinin Bağlı Olduğu Gruplar</h5>
-                <ul id="GroupsByRole">
+                <h5 class="card-title">Kullanıcının Bağlı Olduğu Gruplar</h5>
+                <ul id="GroupsByUser">
                 </ul>
             </div>
             <div class="col-md-4">
             </div>
             <div class="col-md-4">
-                <h5 class="card-title">Yetkinin Olmadığı Gruplar</h5>
-                <ul id="GroupsNoRole">
+                <h5 class="card-title">Kullanıcının Bağlı Olmadığı Gruplar</h5>
+                <ul id="GroupsNoUser">
                 </ul>
             </div>
         </div>
@@ -32,7 +34,7 @@
     </div>
 </div>
 
-<input type="hidden" id="RoleId" value="@ViewBag.RoleId" />
+<input type="hidden" id="UserId" value="@ViewBag.UserId" />
 
 
 @section Scripts {
@@ -41,16 +43,16 @@
 
         $(document).ready(function () {
 
-            GroupsByRole();
-            GroupsNoRole();
+            GroupsByUser();
+            GroupsNoUser();
         });
 
-        function GroupsByRole() {
+        function GroupsByUser() {
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/GroupsByRole",
-                data: JSON.stringify($("#RoleId").val()),
+                url: "/UserGroup/GroupsByUser",
+                data: JSON.stringify($("#UserId").val()),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
                     var data = result;
@@ -61,7 +63,7 @@
                         row += `<li > <a href="#" role="button" class="btnGroupDelete"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
                     });
 
-                    $("#GroupsByRole").html(row);
+                    $("#GroupsByUser").html(row);
                 },
                 error: function (ex) {
                     console.log(ex);
@@ -70,35 +72,28 @@
             });
         }
 
-        $("#GroupsByRole").on("click", ".btnGroupDelete", function () {
+        $("#GroupsByUser").on("click", ".btnGroupDelete", function () {
 
             var groupId = $(this).data("id");
-            console.log("Düğmeye tıklandı: groupıd ID = " + groupId);
+            console.log("Düğmeye tıklandı: Group ID = " + groupId);
 
-            var roleId = $("#RoleId").val();
-            console.log("Düğmeye tıklandı: Role ID = " + roleId);
+            var userId = $("#UserId").val();
+            console.log("Düğmeye tıklandı: User ID = " + userId);
 
-            //Ajax ile gidip
-            //RoleGruptan Silecek
-
-            // var unassignGroupRequestDto = {
-            //     RoleId: roleId,
-            //     GroupId: groupId
-            // };
-            var UnassignGroupRequestDto = {};
-            UnassignGroupRequestDto.RoleId = roleId;
-            UnassignGroupRequestDto.GroupId = groupId;
+            var UnassignGroupForUserRequestDto = {};
+            UnassignGroupForUserRequestDto.UserId = userId;
+            UnassignGroupForUserRequestDto.GroupId = groupId;
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/UnassignGroupToRole",
-                data: JSON.stringify(UnassignGroupRequestDto),
+                url: "/UserGroup/UnassignGroupToUser",
+                data: JSON.stringify(UnassignGroupForUserRequestDto),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
 
                     console.log(result);
-                    GroupsByRole();
-                    GroupsNoRole();
+                    GroupsByUser();
+                    GroupsNoUser();
                 },
                 error: function (ex) {
                     console.log(ex);
@@ -108,14 +103,14 @@
         });
 
 
-        //Yetkisi olmayan Tüm Grupların listelemesi
+        //Kullanıcının bağlı olmadığı Tüm Grupların listelemesi
 
-        function GroupsNoRole() {
+        function GroupsNoUser() {
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/GroupsNoRole",
-                data: JSON.stringify($("#RoleId").val()),
+                url: "/UserGroup/GroupsNoUser",
+                data: JSON.stringify($("#UserId").val()),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
 
@@ -131,7 +126,7 @@
 
                     });
 
-                    $("#GroupsNoRole").html(row);
+                    $("#GroupsNoUser").html(row);
 
                 },
                 error: function (ex) {
@@ -141,29 +136,27 @@
             });
         }
 
-        $("#GroupsNoRole").on("click", ".btnGroupAdd", function () {
+        $("#GroupsNoUser").on("click", ".btnGroupAdd", function () {
             var groupId = $(this).data("id");
             console.log("Düğmeye tıklandı: Group ID = " + groupId);
 
-            var roleId = $("#RoleId").val();
-            console.log("Düğmeye tıklandı: Role ID = " + roleId);
+            var userId = $("#UserId").val();
+            console.log("Düğmeye tıklandı: User ID = " + userId);
 
-            //Ajax ile gidip RoleGruba ekleyecek
-
-            var AssignGroupRequestDto = {};
-            AssignGroupRequestDto.RoleId = roleId;
-            AssignGroupRequestDto.GroupId = groupId;
+            var AssignGroupForUserRequestDto = {};
+            AssignGroupForUserRequestDto.UserId = userId;
+            AssignGroupForUserRequestDto.GroupId = groupId;
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/AssignGroupToRole",
-                data: JSON.stringify(AssignGroupRequestDto),
+                url: "/UserGroup/AssignGroupToUser",
+                data: JSON.stringify(AssignGroupForUserRequestDto),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
 
                     console.log(result);
-                    GroupsByRole();
-                    GroupsNoRole();
+                    GroupsByUser();
+                    GroupsNoUser();
 
                 },
                 error: function (ex) {

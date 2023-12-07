@@ -209,8 +209,6 @@ namespace AuthOperationsApp.Persistence.Services
                 UnassignRoleToGroupDto = mappedRoleGroup
             };
         }
-
-
     }
 }
 

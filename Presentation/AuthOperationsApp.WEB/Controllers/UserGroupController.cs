@@ -1,7 +1,13 @@
-﻿
+﻿using AuthOperationsApp.Application.DTOs.RoleGroup;
 using AuthOperationsApp.Application.DTOs.UserGroup;
+using AuthOperationsApp.Application.Features.Commands.RoleGroup.AssignRoleToGroup;
+using AuthOperationsApp.Application.Features.Commands.RoleGroup.UnassignRoleToGroup;
+using AuthOperationsApp.Application.Features.Commands.UserGroup.AssignGroupToUser;
 using AuthOperationsApp.Application.Features.Commands.UserGroup.AssignUserToGroup;
+using AuthOperationsApp.Application.Features.Commands.UserGroup.UnassignGroupToUser;
 using AuthOperationsApp.Application.Features.Commands.UserGroup.UnassignUserToGroup;
+using AuthOperationsApp.Application.Features.Queries.Group.GetAllGroupByUser;
+using AuthOperationsApp.Application.Features.Queries.Group.GetAllGroupNoUser;
 using AuthOperationsApp.Application.Features.Queries.User.GetAllUserByGroup;
 using AuthOperationsApp.Application.Features.Queries.User.GetAllUserNoGroup;
 using AuthOperationsApp.Infrastructure.Base;
@@ -96,5 +102,86 @@ namespace AuthOperationsApp.WEB.Controllers
             }
             return Json(new { error = "Invalid model state" });
         }
+
+        //******************************************
+        //Kullanıcının bağlı olduğu Gruplar kutucuğu - Kullanıcının bağlı olmadığı Gruplar Kutucuğu Ekranı
+        [HttpGet]
+        public async Task<IActionResult> AllGroupsByUser(Guid id)
+        {
+            ViewBag.UserId = id;
+            ViewBag.FullName = "";
+            return View();
+        }
+        //Kullanıcının bulunduğu Gruplar kutucuğu
+        [HttpPost]
+        public async Task<JsonResult> GroupsByUser([FromBody] string UserId)
+        {
+            GetAllGroupByUserQueryRequest request = new GetAllGroupByUserQueryRequest();
+            request.UserId = Guid.Parse(UserId);
+            GetAllGroupByUserQueryResponse response = await Mediator.Send(request);
+
+            if (response.GroupByUserInfoDto.Success)
+                return Json(response.GroupByUserInfoDto.GroupByUserDto);
+            else
+                return Json(new { error = response.GroupByUserInfoDto.Message });
+        }
+
+        // Kullanıcının bulunmadığı Gruplar kutucuğu
+        [HttpPost]
+        public async Task<JsonResult> GroupsNoUser([FromBody] string UserId)
+        {
+            GetAllGroupNoUserQueryRequest request = new GetAllGroupNoUserQueryRequest();
+            request.UserId = Guid.Parse(UserId);
+
+            GetAllGroupNoUserQueryResponse response = await Mediator.Send(request);
+
+            if (!response.AllGroupNoUserInfoDto.Success)
+            {
+                Json(new { error = response.AllGroupNoUserInfoDto.Message });
+            }
+
+            return Json(response.AllGroupNoUserInfoDto.AllGroupNoUserDto);
+        }
+
+        //Kullanıcıya Grup atama 
+        [HttpPost]
+        public async Task<JsonResult> AssignGroupToUser([FromBody] AssignGroupForUserRequestDto requestDto)
+        {
+            if (ModelState.IsValid)
+            {
+                AssignGroupToUserCommandRequest request = new AssignGroupToUserCommandRequest();
+                request.GroupId = Guid.Parse(requestDto.GroupId);
+                request.UserId = Guid.Parse(requestDto.UserId);
+
+                AssignGroupToUserCommandResponse response = await Mediator.Send(request);
+
+                if (response.AssignGroupToUserInfoDto.Success)
+                    return Json(response.AssignGroupToUserInfoDto.Message);
+                else
+                    return Json(new { error = response.AssignGroupToUserInfoDto.Message });
+            }
+            return Json(new { error = "Invalid model state" });
+        }
+
+        //Kullanıcıdan Grup atamasını kaldırma
+        [HttpPost]
+        public async Task<JsonResult> UnassignGroupToUser([FromBody] UnassignGroupForUserRequestDto requestDto)
+        {
+            if (ModelState.IsValid)
+            {
+                UnassignGroupToUserCommandRequest request = new UnassignGroupToUserCommandRequest();
+                request.GroupId = Guid.Parse(requestDto.GroupId);
+                request.UserId = Guid.Parse(requestDto.UserId);
+
+                UnassignGroupToUserCommandResponse response = await Mediator.Send(request);
+
+                if (response.UnassignGroupToUserInfoDto.Success)
+                    return Json(response.UnassignGroupToUserInfoDto.Message);
+                else
+                    return Json(new { error = response.UnassignGroupToUserInfoDto.Message });
+            }
+            return Json(new { error = "Invalid model state" });
+        }
+
     }
 }

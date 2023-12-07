@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupByRole
 {
-    public class GetAllGroupByRoleQueryHandler : IRequestHandler<GetAllGroupByRoleQueryRequest, GetAllGroupByRoleQueryResponse>
+    public class GetAllGroupByRoleQueryHandler : IRequestHandler<GetAllGroupByRoleQueryRequest, GetAllGroupByUserQueryResponse>
     {
         private readonly IRoleGroupService _roleGroupService;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupBy
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<GetAllGroupByRoleQueryResponse> Handle(GetAllGroupByRoleQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllGroupByUserQueryResponse> Handle(GetAllGroupByRoleQueryRequest request, CancellationToken cancellationToken)
         {
             List<GroupByRoleDto?> groups = await _roleGroupService.GetGroupsByRoleIdAsync(request.RoleId);
 
@@ -32,13 +32,13 @@ namespace AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupBy
                 groupByRoleInfoDto.Success = false;
                 groupByRoleInfoDto.Message = Messages.GroupsBelongingRoleNotFound;
                 groupByRoleInfoDto.GroupByRoleDto= [];
-                return new GetAllGroupByRoleQueryResponse(groupByRoleInfoDto);
+                return new GetAllGroupByUserQueryResponse(groupByRoleInfoDto);
 
             }
             groupByRoleInfoDto.Success = true;
             groupByRoleInfoDto.Message = Messages.GroupsBelongingRoleSuccess;
             groupByRoleInfoDto.GroupByRoleDto = groups;
-            return new GetAllGroupByRoleQueryResponse(groupByRoleInfoDto);
+            return new GetAllGroupByUserQueryResponse(groupByRoleInfoDto);
         }
     }
 }

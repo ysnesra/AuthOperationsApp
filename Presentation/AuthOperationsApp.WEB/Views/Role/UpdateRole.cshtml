@@ -46,20 +46,3 @@
         });
     </script>
 }
-
-
-
-@* <form asp-action="UpdateRole" asp-controller="Role" data-val="true" method="post">
-
-    <input type="hidden" value="Id" value="@Model.UpdateRoleInfoDto.UpdateRoleDto.Id" />
-
-    <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
-
-    <label for="Name">Rol</label>
-    <input asp-for="UpdateRoleInfoDto.UpdateRoleDto.Name" value="@Model.UpdateRoleInfoDto.UpdateRoleDto.Name" class="form-control" />
-    <span asp-validation-for="UpdateRoleInfoDto.UpdateRoleDto.Name" class="text-danger small"></span>
-    <br />
-
-    <button type="submit" asp-route-userId="@Model.UpdateRoleInfoDto.UpdateRoleDto.Id" class="btn btn-dark">Güncelle</button>
-
-</form>  *@

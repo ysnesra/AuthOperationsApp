@@ -1,11 +1,9 @@
 ﻿using AuthOperationsApp.Application.Abstractions.Services;
 using AuthOperationsApp.Application.Constants;
-using AuthOperationsApp.Application.DTOs.Role;
 using AuthOperationsApp.Application.DTOs.User;
 using AuthOperationsApp.Application.Features.Commands.User.UpdateUser;
 using AuthOperationsApp.Application.Repositories;
 using AuthOperationsApp.Domain.Entities;
-using AuthOperationsApp.Persistence.Repositories;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -72,8 +70,8 @@ namespace AuthOperationsApp.Persistence.Services
             };
             UpdateUserInfoDto userMappedInfoDto = new UpdateUserInfoDto
             {
-                Success = false,
-                Message = Messages.UpdateUserFailed,
+                Success = true,
+                Message = Messages.UpdateUserSuccess,
                 UpdateUserDto = userMapped
         };
 
