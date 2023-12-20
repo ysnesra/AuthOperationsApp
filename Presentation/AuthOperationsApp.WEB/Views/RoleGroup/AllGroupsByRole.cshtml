@@ -4,10 +4,10 @@
 }
 
 
-
 <div class="row">
-    <div class="col-4 offset-4">
-        <h1 class="display4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    <div class="col-12 text-center">
+      @*   <h1 id="RoleNameDisplay" class="display4 border-bottom pb-2"> @ViewData["Title"]</h1> *@
+        <h1 id="RoleNameDisplay" class="display4 border-bottom pb-2"></h1>
     </div>
 </div>
 
@@ -40,138 +40,156 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-
+            
             GroupsByRole();
             GroupsNoRole();
+            ShowRoleName();
         });
 
-        function GroupsByRole() {
+        function ShowRoleName() {
 
             $.ajax({
                 type: "POST",
-                url: "/RoleGroup/GroupsByRole",
+                url: "/RoleGroup/GetRoleName",
                 data: JSON.stringify($("#RoleId").val()),
                 contentType: 'application/json; charset=utf-8',
                 success: function (result) {
-                    var data = result;
-                    console.log(data);
-                    console.log(data.length);
-                    var row = "";
-                    $.each(data, function (k, v) {
-                        row += `<li > <a href="#" role="button" class="btnGroupDelete"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
-                    });
-
-                    $("#GroupsByRole").html(row);
+                    $("#RoleNameDisplay").html(result.roleName + 'için Gruplar');
+                    console.log(result.roleName);
                 },
                 error: function (ex) {
                     console.log(ex);
-                    alert("An error occurred while processing the request.");
+                    alert("An error occurred while fetching the role name.");
                 }
             });
         }
+            function GroupsByRole() {
 
-        $("#GroupsByRole").on("click", ".btnGroupDelete", function () {
-
-            var groupId = $(this).data("id");
-            console.log("Düğmeye tıklandı: groupıd ID = " + groupId);
-
-            var roleId = $("#RoleId").val();
-            console.log("Düğmeye tıklandı: Role ID = " + roleId);
-
-            //Ajax ile gidip
-            //RoleGruptan Silecek
-
-            // var unassignGroupRequestDto = {
-            //     RoleId: roleId,
-            //     GroupId: groupId
-            // };
-            var UnassignGroupRequestDto = {};
-            UnassignGroupRequestDto.RoleId = roleId;
-            UnassignGroupRequestDto.GroupId = groupId;
-
-            $.ajax({
-                type: "POST",
-                url: "/RoleGroup/UnassignGroupToRole",
-                data: JSON.stringify(UnassignGroupRequestDto),
-                contentType: 'application/json; charset=utf-8',
-                success: function (result) {
-
-                    console.log(result);
-                    GroupsByRole();
-                    GroupsNoRole();
-                },
-                error: function (ex) {
-                    console.log(ex);
-                    alert("An error occurred while processing the request.");
-                }
-            });
-        });
-
-
-        //Yetkisi olmayan Tüm Grupların listelemesi
-
-        function GroupsNoRole() {
-
-            $.ajax({
-                type: "POST",
-                url: "/RoleGroup/GroupsNoRole",
-                data: JSON.stringify($("#RoleId").val()),
-                contentType: 'application/json; charset=utf-8',
-                success: function (result) {
-
-                    var data = result;
-                    console.log(data);
-                    console.log(data.length);
-                    var row = "";
-                    $.each(data, function (k, v) {
-
+                $.ajax({
+                    type: "POST",
+                    url: "/RoleGroup/GroupsByRole",
+                    data: JSON.stringify($("#RoleId").val()),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        var data = result;
                         console.log(data);
+                        console.log(data.length);
+                        var row = "";
+                        $.each(data, function (k, v) {
+                            row += `<li > <a href="#" role="button" class="btnGroupDelete"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
+                        });
 
-                        row += `<li > <a href="#" role="button" class="btnGroupAdd"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
+                        $("#GroupsByRole").html(row);
+                    },
+                    error: function (ex) {
+                        console.log(ex);
+                        alert("An error occurred while processing the request.");
+                    }
+                });
+            }
 
-                    });
+            $("#GroupsByRole").on("click", ".btnGroupDelete", function () {
 
-                    $("#GroupsNoRole").html(row);
+                var groupId = $(this).data("id");
+                console.log("Düğmeye tıklandı: groupıd ID = " + groupId);
 
-                },
-                error: function (ex) {
-                    console.log(ex);
-                    alert("An error occurred while processing the request.");
-                }
+                var roleId = $("#RoleId").val();
+                console.log("Düğmeye tıklandı: Role ID = " + roleId);
+
+                //Ajax ile gidip
+                //RoleGruptan Silecek
+
+                // var unassignGroupRequestDto = {
+                //     RoleId: roleId,
+                //     GroupId: groupId
+                // };
+                var UnassignGroupRequestDto = {};
+                UnassignGroupRequestDto.RoleId = roleId;
+                UnassignGroupRequestDto.GroupId = groupId;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/RoleGroup/UnassignGroupToRole",
+                    data: JSON.stringify(UnassignGroupRequestDto),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+
+                        console.log(result);
+                        GroupsByRole();
+                        GroupsNoRole();
+                    },
+                    error: function (ex) {
+                        console.log(ex);
+                        alert("An error occurred while processing the request.");
+                    }
+                });
             });
-        }
 
-        $("#GroupsNoRole").on("click", ".btnGroupAdd", function () {
-            var groupId = $(this).data("id");
-            console.log("Düğmeye tıklandı: Group ID = " + groupId);
 
-            var roleId = $("#RoleId").val();
-            console.log("Düğmeye tıklandı: Role ID = " + roleId);
+            //Yetkisi olmayan Tüm Grupların listelemesi
 
-            //Ajax ile gidip RoleGruba ekleyecek
+            function GroupsNoRole() {
 
-            var AssignGroupRequestDto = {};
-            AssignGroupRequestDto.RoleId = roleId;
-            AssignGroupRequestDto.GroupId = groupId;
+                $.ajax({
+                    type: "POST",
+                    url: "/RoleGroup/GroupsNoRole",
+                    data: JSON.stringify($("#RoleId").val()),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
 
-            $.ajax({
-                type: "POST",
-                url: "/RoleGroup/AssignGroupToRole",
-                data: JSON.stringify(AssignGroupRequestDto),
-                contentType: 'application/json; charset=utf-8',
-                success: function (result) {
+                        var data = result;
+                        console.log(data);
+                        console.log(data.length);
+                        var row = "";
+                        $.each(data, function (k, v) {
 
-                    console.log(result);
-                    GroupsByRole();
-                    GroupsNoRole();
+                            console.log(data);
 
-                },
-                error: function (ex) {
-                    console.log(ex);
-                    alert("An error occurred while processing the request.");
-                }
+                            row += `<li > <a href="#" role="button" class="btnGroupAdd"  data-id="${v["id"]}" > ${v["name"]}  </a> </li>`;
+
+                        });
+
+                        $("#GroupsNoRole").html(row);
+
+                    },
+                    error: function (ex) {
+                        console.log(ex);
+                        alert("An error occurred while processing the request.");
+                    }
+                });
+            }
+
+            $("#GroupsNoRole").on("click", ".btnGroupAdd", function () {
+                var groupId = $(this).data("id");
+                console.log("Düğmeye tıklandı: Group ID = " + groupId);
+
+                var roleId = $("#RoleId").val();
+                console.log("Düğmeye tıklandı: Role ID = " + roleId);
+
+                //Ajax ile gidip RoleGruba ekleyecek
+
+                var AssignGroupRequestDto = {};
+                AssignGroupRequestDto.RoleId = roleId;
+                AssignGroupRequestDto.GroupId = groupId;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/RoleGroup/AssignGroupToRole",
+                    data: JSON.stringify(AssignGroupRequestDto),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+
+                        console.log(result);
+                        GroupsByRole();
+                        GroupsNoRole();
+
+                    },
+                    error: function (ex) {
+                        console.log(ex);
+                        alert("An error occurred while processing the request.");
+                    }
+                });
             });
-        });
     </script>
 
 }

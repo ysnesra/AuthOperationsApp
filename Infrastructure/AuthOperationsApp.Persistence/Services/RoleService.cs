@@ -30,6 +30,7 @@ namespace AuthOperationsApp.Persistence.Services
             var rolesDto = _mapper.Map<List<RoleListDto>>(roles);
             return rolesDto;
         }
+
         public async Task<RoleByIdDto> GetRoleByIdAsync(Guid id, bool tracking = true)
         {
             var roleDetail = await _roleReadRepository.GetByIdAsync(id);

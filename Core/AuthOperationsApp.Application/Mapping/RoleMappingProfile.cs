@@ -1,5 +1,6 @@
 ﻿using AuthOperationsApp.Application.DTOs.Role;
 using AuthOperationsApp.Application.DTOs.RoleGroup;
+using AuthOperationsApp.Application.Features.Queries.Role.GetRoleById;
 using AuthOperationsApp.Domain.Entities;
 using AutoMapper;
 
@@ -22,6 +23,8 @@ namespace AuthOperationsApp.Application.Mapping
 
             CreateMap<Role, RoleByGroupDto>(); 
             CreateMap<Role, AllRoleNoGroupDto>(); 
+
+            CreateMap<RoleByIdDto, GetRoleByIdQueryResponse>(); 
         }
     }
 }

@@ -5,6 +5,7 @@ using AuthOperationsApp.Application.Features.Commands.RoleGroup.UnassignGroupToR
 using AuthOperationsApp.Application.Features.Commands.RoleGroup.UnassignRoleToGroup;
 using AuthOperationsApp.Application.Features.Queries.Role.GetAllRoleByGroup;
 using AuthOperationsApp.Application.Features.Queries.Role.GetAllRoleNoGroup;
+using AuthOperationsApp.Application.Features.Queries.Role.GetRoleById;
 using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupByRole;
 using AuthOperationsApp.Application.Features.Queries.RoleGroup.GetAllGroupNoRole;
 using AuthOperationsApp.Infrastructure.Base;
@@ -25,17 +26,31 @@ namespace AuthOperationsApp.WEB.Controllers
         public async Task<IActionResult> AllGroupsByRole(Guid id)
         {
             ViewBag.RoleId = id;
-            ViewBag.RoleName = "";
-         
             return View();
+        }
+
+        //AllGroupsByRole sayfasına Roleismini getirir
+        [HttpPost]
+        public async Task<JsonResult> GetRoleName([FromBody] string RoleId)
+        {
+            GetRoleByIdQueryRequest request = new GetRoleByIdQueryRequest();
+            request.Id = Guid.Parse(RoleId);
+            GetRoleByIdQueryResponse response = await Mediator.Send(request);       
+
+            if (response.RoleByIdInfoDto.Success)
+            {
+                return Json(new { RoleName = response.RoleByIdInfoDto.RoleByIdDto.Name });
+            }
+            return Json(new { error = response.RoleByIdInfoDto.Message });
+
         }
 
         //Yetkinin bağlı olduğu Gruplar
         [HttpPost]
         public async Task<JsonResult> GroupsByRole([FromBody] string RoleId)
         {
-           
-            GetAllGroupByRoleQueryRequest request=new GetAllGroupByRoleQueryRequest();
+
+            GetAllGroupByRoleQueryRequest request = new GetAllGroupByRoleQueryRequest();
             request.RoleId = Guid.Parse(RoleId);
             GetAllGroupByUserQueryResponse response = await Mediator.Send(request);
 
@@ -85,7 +100,7 @@ namespace AuthOperationsApp.WEB.Controllers
 
         //Roleden Grup atamasını kaldırma
         [HttpPost]
-        public async Task<JsonResult> UnassignGroupToRole([FromBody]UnassignGroupRequestDto requestDto)
+        public async Task<JsonResult> UnassignGroupToRole([FromBody] UnassignGroupRequestDto requestDto)
         {
             if (ModelState.IsValid)
             {
@@ -126,7 +141,7 @@ namespace AuthOperationsApp.WEB.Controllers
                 return Json(new { error = response.RoleByGroupInfoDto.Message });
         }
 
-         // Grubun sahip olmadığı Yetkiler kutucuğu
+        // Grubun sahip olmadığı Yetkiler kutucuğu
         [HttpPost]
         public async Task<JsonResult> RolesNoGroup([FromBody] string GroupId)
         {

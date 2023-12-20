@@ -18,13 +18,13 @@ namespace AuthOperationsApp.WEB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AllGroups()
+        public IActionResult AllGroups()
         {
             return View();
         }
 
         [HttpPost]      
-        public async Task<JsonResult> GetAllGroups()
+        public async  Task<JsonResult> GetAllGroups()
         {
             GetAllGroupQueryRequest request = new GetAllGroupQueryRequest();
             GetAllGroupQueryResponse response = await Mediator.Send(request);

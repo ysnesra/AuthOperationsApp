@@ -6,5 +6,10 @@ namespace AuthOperationsApp.Domain.Entities
     public class Group : BaseEntity
     {
         public string Name { get; set; }
+
+
+        public virtual IList<Role> Role { get; set; }
+
+
     }
 }
