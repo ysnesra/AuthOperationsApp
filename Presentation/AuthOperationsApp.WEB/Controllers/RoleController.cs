@@ -18,8 +18,17 @@ namespace AuthOperationsApp.WEB.Controllers
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> AllRoles()
-        {          
-            return View();
+        {
+            GetAllRoleQueryRequest request = new GetAllRoleQueryRequest();
+
+            GetAllRoleQueryResponse response = await Mediator.Send(request);
+
+            if (!response.RoleListInfoDtos.Success)
+            {
+                return View(new { error = response.RoleListInfoDtos.Message });
+            }
+            return View(response.RoleListInfoDtos.RoleListDto);
+            
         }
 
         [HttpPost]
