@@ -61,5 +61,20 @@ namespace AuthOperationsApp.WEB.Controllers
             }
             return Json(response);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async  Task<ActionResult> GetList()
+        {
+            
+            GetAllRoleQueryRequest request = new GetAllRoleQueryRequest();
+
+            GetAllRoleQueryResponse response = await Mediator.Send(request);
+
+            var data = response.RoleListInfoDtos.RoleListDto;
+        
+            return PartialView("GetList", data);
+        }
+
     }
 }

@@ -14,24 +14,9 @@
 <div class="card">
     <div class="card-body">
 
-        <div class="col-md-12">
-            <table class="table table-bordered table-striped mt-4 table-responsive">               
-                <tbody>
-                    @foreach (var group in Model)
-                    {
-                        <tr>
-                            <td>@group.Name</td>
-                            <td>
-                                <a asp-action="AllRolesByGroupId" asp-controller="RoleGroup" asp-route-groupId="@group.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i> Yetkinin Bağlı Olduğu Grupları Göster</a>
-                            </td>
+        <div id="Tablelist" class="col-md-12">
+         
 
-                            <td>
-                                <a data-name="@group.Name" data-id="@group.Id" class="btn btn-warning btnEdit"><i class="fa-solid fa-cart-plus"></i> Düzenle</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
         </div>
 
     </div>
@@ -65,6 +50,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            GetList();
 
             $(".btnEdit").on("click", function () {
                 //Tıklanan düğmenin veri özelliklerinden rol adını ve id yi alırız
@@ -101,7 +88,34 @@
                         alert("An error occurred while processing the request.");
                     }
                 });
+
+
             });
         });
+
+
+
+        function GetList() {
+            var table = $("#Tablelist");
+
+            $.ajax({
+                type: "GET",
+                url: "/Role/GetList",
+                dataType:"html",
+                cache:false,
+                success: function (result) {
+
+                    console.log(result);
+                    if (result != null) {
+                        table.html(result);
+                    }                    
+                },
+                error: function (ex) {
+                    console.log(ex);
+                    alert("An error occurred while processing the request.");
+                }
+            });
+        }        
+
     </script>
 } 

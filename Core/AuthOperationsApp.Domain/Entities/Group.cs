@@ -7,9 +7,5 @@ namespace AuthOperationsApp.Domain.Entities
     {
         public string Name { get; set; }
 
-
-        public virtual IList<Role> Role { get; set; }
-
-
     }
 }

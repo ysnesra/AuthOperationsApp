@@ -1,0 +1,20 @@
+﻿@using AuthOperationsApp.Application.DTOs.Role
+@model List<RoleListDto>
+
+<table class="table table-bordered table-striped mt-4 table-responsive">
+    <tbody>
+        @foreach (var group in Model)
+        {
+            <tr>
+                <td>@group.Name</td>
+                <td>
+                    <a asp-action="AllRolesByGroupId" asp-controller="RoleGroup" asp-route-groupId="@group.Id" class="btn btn-secondary"><i class="fa-solid fa-cart-plus"></i> Yetkinin Bağlı Olduğu Grupları Göster</a>
+                </td>
+
+                <td>
+                    <a data-name="@group.Name" data-id="@group.Id" class="btn btn-warning btnEdit"><i class="fa-solid fa-cart-plus"></i> Düzenle</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

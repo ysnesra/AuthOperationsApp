@@ -24,7 +24,7 @@ namespace AuthOperationsApp.Persistence.Contexts
                 optionsBuilder.UseSqlServer(Configuration.ConnectionString);
             optionsBuilder.UseLazyLoadingProxies();
         }
-
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
